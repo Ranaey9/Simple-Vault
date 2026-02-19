@@ -43,27 +43,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Flutter yerel yapılandırmaları
-.flutter-plugins
-.packages
-.pub-cache/
-
-# Android özel (Yerel SDK yolları başkasında çalışmaz)
-android/local.properties
-android/key.properties
-*.keystore
-*.jks
-
-# iOS özel (Mac'e özel gereksiz dosyalar)
-ios/Pods/
-ios/.symlinks/
-ios/Flutter/Generated.xcconfig
-ios/Flutter/flutter_export_environment.sh
-ios/ServiceDefinitions.json
-ios/DerivedData/
-*.xcworkspace
-!ios/Runner.xcworkspace # Workspace dosyasının kendisi lazım ama içindeki veriler lazım değil
-
-# Mac işletim sistemi kalıntıları
-.DS_Store
