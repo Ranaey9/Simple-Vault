@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_vault/screens/home_screen.dart';
 import 'package:simple_vault/screens/login_screen.dart';
 
 void main() => runApp(const MyApp());
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
-      home: LoginScreen(),
+      home: HomeScreen(),
     );
   }
 }
