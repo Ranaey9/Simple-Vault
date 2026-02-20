@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_vault/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -102,6 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         await prefs.setBool('isLoggedIn', true);
 
                         print("Hafızaya kaydedildi: $Name $Surname");
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
                       }
                     },
                     child: Text("Log in", style: TextStyle(fontSize: 20)),
