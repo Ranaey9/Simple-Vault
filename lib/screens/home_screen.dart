@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_vault/screens/password_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,21 +11,51 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    super.initState();
+    _loadUserInfo(); // Sayfa açılır açılmaz hafızadan ismi okuyor
+  }
+
+  String Name = "";
+  Future<void> _loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      Name = prefs.getString('userName') ?? "User";
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(title: const Text("Home Screen"), backgroundColor: const Color(0xFFF5F5F5), elevation: 0),
+      appBar: AppBar(
+        title: const Text("Home Screen"),
+        backgroundColor: const Color(0xFFF5F5F5),
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                "Hello, $Name! ",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+            ),
             buildVaultCard(
               context: context,
               title: "Passwords",
               subtitle: "Securely store your login info",
               icon: Icons.vpn_key_rounded,
               iconColor: Colors.blueAccent,
-              onTap: () => print("Passwords Tapped"),
+              onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const PasswordListScreen()),
+  );
+},
             ),
             buildVaultCard(
               context: context,
@@ -41,6 +73,30 @@ class _HomeScreenState extends State<HomeScreen> {
               iconColor: Colors.greenAccent,
               onTap: () => print("Codes Tapped"),
             ),
+            const Spacer(),
+            TextButton.icon(
+              onPressed: () async {
+                final prefs = await SharedPreferences.getInstance();
+                await prefs
+                    .clear(); // Tüm verileri siler
+
+                // Kullanıcıyı giriş ekranına geri gönderir ve geri gelmesini engeller
+                Navigator.of(
+                  context,
+                ).pushNamedAndRemoveUntil('/', (route) => false);
+              },
+              icon: const Icon(Icons.logout, color: Colors.redAccent),
+              label: const Text(
+                "Log Out",
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ), 
           ],
         ),
       ),
@@ -53,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required String subtitle,
     required IconData icon,
     required Color iconColor,
-    required VoidCallback onTap, 
+    required VoidCallback onTap,
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
