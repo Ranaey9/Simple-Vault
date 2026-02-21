@@ -9,6 +9,9 @@ class PasswordListScreen extends StatefulWidget {
 }
 
 class _PasswordListScreenState extends State<PasswordListScreen> {
+  List<Map<String, String>> passwordList = [];
+  TextEditingController passController = TextEditingController();
+  bool isObscured = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +29,71 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddPasswordScreen()),
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true, // Klavyenin formu yukarı itmesi için şart
+            builder: (BuildContext context) {
+              // Pencere içindeki state'i yönetmek için StatefulBuilder kullanıyoruz
+              return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setModalState) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(
+                        context,
+                      ).viewInsets.bottom, // Klavye boşluğu
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                    ),
+                    child: Column(
+                      mainAxisSize:
+                          MainAxisSize.min, // Sadece içerik kadar yer kapla
+                      children: [
+                        // 1. Kutu: Site Adı (SiteController'ı buraya bağla)
+                        TextField(
+                          decoration: InputDecoration(labelText: "Site Name"),
+                        ),
+
+                        const SizedBox(height: 15),
+
+                        // 2. Kutu: Şifre (Özel Göz İkonlu Kutu)
+                        TextField(
+                          obscureText: isObscured, // Şifreyi gizle/göster
+                          decoration: InputDecoration(
+                            labelText: "Password",
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isObscured
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                              onPressed: () {
+                                // DİKKAT: setModalState kullanarak pencereyi yeniliyoruz
+                                setModalState(() {
+                                  isObscured = !isObscured;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // 3. Buton: Kaydet Butonu
+                        ElevatedButton(
+                          onPressed: () {
+                            // Buraya listeye ekleme kodunu yazacağız
+                            Navigator.pop(context); // Pencereyi kapat
+                          },
+                          child: const Text("Save Password"),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           );
         },
       ),
