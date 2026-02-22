@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simple_vault/screens/add_password_screen.dart';
 
 class PasswordListScreen extends StatefulWidget {
   const PasswordListScreen({super.key});
@@ -31,9 +30,8 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            isScrollControlled: true, // Klavyenin formu yukarı itmesi için şart
+            isScrollControlled: true,
             builder: (BuildContext context) {
-              // Pencere içindeki state'i yönetmek için StatefulBuilder kullanıyoruz
               return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setModalState) {
                   return Padding(
@@ -49,14 +47,10 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                       mainAxisSize:
                           MainAxisSize.min, // Sadece içerik kadar yer kapla
                       children: [
-                        // 1. Kutu: Site Adı (SiteController'ı buraya bağla)
                         TextField(
                           decoration: InputDecoration(labelText: "Site Name"),
                         ),
-
                         const SizedBox(height: 15),
-
-                        // 2. Kutu: Şifre (Özel Göz İkonlu Kutu)
                         TextField(
                           obscureText: isObscured, // Şifreyi gizle/göster
                           decoration: InputDecoration(
@@ -68,7 +62,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                                     : Icons.visibility,
                               ),
                               onPressed: () {
-                                // DİKKAT: setModalState kullanarak pencereyi yeniliyoruz
+                                //pencereyi yeniliyoruz
                                 setModalState(() {
                                   isObscured = !isObscured;
                                 });
@@ -78,12 +72,9 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                         ),
 
                         const SizedBox(height: 20),
-
-                        // 3. Buton: Kaydet Butonu
                         ElevatedButton(
                           onPressed: () {
-                            // Buraya listeye ekleme kodunu yazacağız
-                            Navigator.pop(context); // Pencereyi kapat
+                            Navigator.pop(context);
                           },
                           child: const Text("Save Password"),
                         ),
