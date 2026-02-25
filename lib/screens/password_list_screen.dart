@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'add_password_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class PasswordListScreen extends StatefulWidget {
   const PasswordListScreen({super.key});
@@ -10,6 +12,35 @@ class PasswordListScreen extends StatefulWidget {
 
 class _PasswordListScreenState extends State<PasswordListScreen> {
   List<Map<String, String>> passwordList = [];
+  bool gizliMi = true;
+
+  Future saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString("passwords", jsonEncode(passwordList));
+  }
+
+  Future loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    String? data = prefs.getString("passwords");
+
+    if (data != null) {
+      setState(() {
+        passwordList = List<Map<String, String>>.from(
+          (jsonDecode(data) as List).map(
+            (item) => Map<String, String>.from(item),
+          ),
+        );
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +67,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                 final item = passwordList[index];
 
                 return Card(
-                   color: Colors.white,
+                  color: Colors.white,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -49,18 +80,44 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                       Icons.vpn_key,
                       color: Colors.blueAccent,
                     ),
+
                     title: Text(item['site'] ?? ""),
+
                     subtitle: Text(
-                      "********",
+                      gizliMi ? "********" : item['pass'] ?? "",
                       style: const TextStyle(letterSpacing: 2),
                     ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.redAccent),
-                      onPressed: () {
-                        setState(() {
-                          passwordList.removeAt(index);
-                        });
-                      },
+
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        /// GÖZ İKONU
+                        IconButton(
+                          icon: Icon(
+                            gizliMi ? Icons.visibility_off : Icons.visibility,
+                            color: Colors.blueAccent,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              gizliMi = !gizliMi;
+                            });
+                          },
+                        ),
+
+                        /// SİLME BUTONU
+                        IconButton(
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.redAccent,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              passwordList.removeAt(index);
+                              saveData();
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -77,6 +134,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
               onSave: (String site, String pass) {
                 setState(() {
                   passwordList.add({'site': site, 'pass': pass});
+                  saveData();
                 });
               },
             ),
