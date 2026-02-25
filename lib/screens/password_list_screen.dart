@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'add_password_screen.dart';
 
 class PasswordListScreen extends StatefulWidget {
+  //çünkü kullanıcı ekleme ve silme işlemleri yapacağımız için StatefulWidget kullanıyoruz
   const PasswordListScreen({super.key});
 
   @override
@@ -9,8 +11,7 @@ class PasswordListScreen extends StatefulWidget {
 
 class _PasswordListScreenState extends State<PasswordListScreen> {
   List<Map<String, String>> passwordList = [];
-  TextEditingController passController = TextEditingController();
-  bool isObscured = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,74 +20,70 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
         title: const Text("My Passwords"),
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
+        centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          "Your saved passwords will appear here.",
-          style: TextStyle(fontSize: 18, color: Colors.grey),
-        ),
-      ),
+      body: passwordList.isEmpty
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: const Center(
+                child: Text(
+                  "Your saved passwords will appear here.",
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              ),
+            )
+          : ListView.builder(
+              itemCount: passwordList.length,
+              itemBuilder: (context, index) {
+                final item = passwordList[index];
+
+                return Card(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.vpn_key,
+                      color: Colors.blueAccent,
+                    ),
+                    title: Text(item['site'] ?? ""),
+                    subtitle: Text(
+                      "********",
+                      style: const TextStyle(letterSpacing: 2),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.redAccent),
+                      onPressed: () {
+                        setState(() {
+                          passwordList.removeAt(index);
+                        });
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueAccent,
         onPressed: () {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            builder: (BuildContext context) {
-              return StatefulBuilder(
-                builder: (BuildContext context, StateSetter setModalState) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(
-                        context,
-                      ).viewInsets.bottom, // Klavye boşluğu
-                      top: 20,
-                      left: 20,
-                      right: 20,
-                    ),
-                    child: Column(
-                      mainAxisSize:
-                          MainAxisSize.min, // Sadece içerik kadar yer kapla
-                      children: [
-                        TextField(
-                          decoration: InputDecoration(labelText: "Site Name"),
-                        ),
-                        const SizedBox(height: 15),
-                        TextField(
-                          obscureText: isObscured, // Şifreyi gizle/göster
-                          decoration: InputDecoration(
-                            labelText: "Password",
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                isObscured
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                              ),
-                              onPressed: () {
-                                //pencereyi yeniliyoruz
-                                setModalState(() {
-                                  isObscured = !isObscured;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text("Save Password"),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
+            backgroundColor: Colors.transparent,
+            builder: (context) => AddPasswordScreen(
+              onSave: (String site, String pass) {
+                setState(() {
+                  passwordList.add({'site': site, 'pass': pass});
+                });
+              },
+            ),
           );
         },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
