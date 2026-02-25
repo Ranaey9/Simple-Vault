@@ -48,10 +48,6 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.add, color: Colors.purple),
-                      onPressed: () {},
-                    ),
-                    IconButton(
                       icon: Icon(
                         isObscured ? Icons.visibility : Icons.visibility_off,
                       ),
