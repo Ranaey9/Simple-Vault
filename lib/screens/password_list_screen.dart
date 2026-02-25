@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'add_password_screen.dart';
 
 class PasswordListScreen extends StatefulWidget {
-  //çünkü kullanıcı ekleme ve silme işlemleri yapacağımız için StatefulWidget kullanıyoruz
   const PasswordListScreen({super.key});
 
   @override
@@ -20,7 +19,6 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
         title: const Text("My Passwords"),
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
-        centerTitle: true,
       ),
       body: passwordList.isEmpty
           ? Padding(
@@ -38,6 +36,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                 final item = passwordList[index];
 
                 return Card(
+                   color: Colors.white,
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -72,7 +71,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            isScrollControlled: true,
+            isScrollControlled: true, //Klavye açılınca ekran bozulmaz
             backgroundColor: Colors.transparent,
             builder: (context) => AddPasswordScreen(
               onSave: (String site, String pass) {
