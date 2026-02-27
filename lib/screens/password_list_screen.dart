@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'add_password_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart'; //Veriyi kalıcı saklamak için
 import 'dart:convert';
 
 class PasswordListScreen extends StatefulWidget {
@@ -12,14 +12,16 @@ class PasswordListScreen extends StatefulWidget {
 
 class _PasswordListScreenState extends State<PasswordListScreen> {
   List<Map<String, String>> passwordList = [];
-  bool gizliMi = true;
 
+  bool gizliMi = true;
+  //Telefon hafızasına veriyi kaydeder
   Future saveData() async {
     final prefs = await SharedPreferences.getInstance();
 
     prefs.setString("passwords", jsonEncode(passwordList));
   }
 
+  //Telefon hafızasındaki veriyi okur ve ekrana yansıtır
   Future loadData() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -36,6 +38,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
     }
   }
 
+  // Sayfa açılır açılmaz hafızadan veriyi okur
   @override
   void initState() {
     super.initState();
@@ -84,7 +87,9 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                     title: Text(item['site'] ?? ""),
 
                     subtitle: Text(
-                      gizliMi ? "********" : item['pass'] ?? "",
+                      gizliMi
+                          ? "*" * (item['pass']?.length ?? 0)
+                          : item['pass'] ?? "",
                       style: const TextStyle(letterSpacing: 2),
                     ),
 
