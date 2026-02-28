@@ -49,20 +49,22 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Passwords",
               subtitle: "Securely store your login info",
               icon: Icons.vpn_key_rounded,
-              iconColor: Colors.blueAccent,
+              iconColor: const Color.fromARGB(255, 76, 130, 222),
               onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const PasswordListScreen()),
-  );
-},
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PasswordListScreen(),
+                  ),
+                );
+              },
             ),
             buildVaultCard(
               context: context,
               title: "Secret Notes",
               subtitle: "Personal thoughts and logs",
               icon: Icons.notes_rounded,
-              iconColor: Colors.orangeAccent,
+              iconColor: const Color.fromARGB(255, 241, 162, 59),
               onTap: () => print("Notes Tapped"),
             ),
             buildVaultCard(
@@ -70,15 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Quick Codes",
               subtitle: "Door codes and pins",
               icon: Icons.qr_code_rounded,
-              iconColor: Colors.greenAccent,
+              iconColor: const Color.fromARGB(255, 81, 187, 136),
               onTap: () => print("Codes Tapped"),
             ),
             const Spacer(),
             TextButton.icon(
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();
-                await prefs
-                    .clear(); // Tüm verileri siler
+                await prefs.clear(); // Tüm verileri siler
 
                 // Kullanıcıyı giriş ekranına geri gönderir ve geri gelmesini engeller
                 Navigator.of(
@@ -94,9 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ), 
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -110,9 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required Color iconColor,
     required VoidCallback onTap,
+    Color backgroundColor = Colors.white,
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
+        color: const Color.fromARGB(255, 244, 241, 241),
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
