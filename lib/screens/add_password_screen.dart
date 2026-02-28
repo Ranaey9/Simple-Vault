@@ -76,6 +76,10 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                 Navigator.pop(context);
               }
             },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+            ),
             child: const Text("Save"),
           ),
         ],
