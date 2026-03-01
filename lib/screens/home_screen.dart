@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
-    Ï   actions: [
+        actions: [
           IconButton(
             icon: const Icon(
               Icons.settings,
@@ -40,10 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               size: 28,
             ),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              );
+              Navigator.pushNamed(context, '/settings');
             },
           ),
         ],
@@ -66,12 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icons.vpn_key_rounded,
               iconColor: const Color.fromARGB(255, 76, 130, 222),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PasswordListScreen(),
-                  ),
-                );
+                Navigator.pushNamed(context, '/passwords');
               },
             ),
             buildVaultCard(
@@ -80,7 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
               subtitle: "Personal thoughts and logs",
               icon: Icons.notes_rounded,
               iconColor: const Color.fromARGB(255, 241, 162, 59),
-              onTap: () => print("Notes Tapped"),
+              onTap: () {
+                Navigator.pushNamed(context, '/Secret Notes');
+              },
             ),
             buildVaultCard(
               context: context,
@@ -88,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
               subtitle: "Door codes and pins",
               icon: Icons.qr_code_rounded,
               iconColor: const Color.fromARGB(255, 81, 187, 136),
-              onTap: () => print("Codes Tapped"),
+              onTap: () {
+                Navigator.pushNamed(context, '/Quick Codes');
+              },
             ),
             const Spacer(),
           ],
@@ -108,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
-      color: const Color.fromARGB(255, 244, 241, 241),
+      color: backgroundColor,
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
