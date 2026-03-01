@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_vault/screens/password_list_screen.dart';
+import 'package:simple_vault/Password/password_list_screen.dart';
+import 'package:simple_vault/settings/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,11 +17,11 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadUserInfo(); // Sayfa açılır açılmaz hafızadan ismi okuyor
   }
 
-  String Name = "";
+  String name = "";
   Future<void> _loadUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      Name = prefs.getString('userName') ?? "User";
+      name = prefs.getString('userName') ?? "User";
     });
   }
 
@@ -31,6 +32,23 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
+        automaticallyImplyLeading: true,
+
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Color.fromARGB(255, 72, 69, 69),
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -39,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40),
               child: Text(
-                "Hello, $Name! ",
+                "Hello, $name! ",
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
@@ -75,26 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () => print("Codes Tapped"),
             ),
             const Spacer(),
-            TextButton.icon(
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.clear(); // Tüm verileri siler
-
-                // Kullanıcıyı giriş ekranına geri gönderir ve geri gelmesini engeller
-                Navigator.of(
-                  context,
-                ).pushNamedAndRemoveUntil('/', (route) => false);
-              },
-              icon: const Icon(Icons.logout, color: Colors.redAccent),
-              label: const Text(
-                "Log Out",
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -112,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
-        color: const Color.fromARGB(255, 244, 241, 241),
+      color: const Color.fromARGB(255, 244, 241, 241),
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
