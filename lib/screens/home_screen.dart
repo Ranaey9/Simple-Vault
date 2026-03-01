@@ -32,9 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
-        automaticallyImplyLeading: true,
-
-        actions: [
+    Ï   actions: [
           IconButton(
             icon: const Icon(
               Icons.settings,
