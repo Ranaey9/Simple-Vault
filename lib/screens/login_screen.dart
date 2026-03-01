@@ -84,7 +84,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () async {
+                      // ignore: non_constant_identifier_names
                       String Name = isimController.text.trim();
+                      // ignore: non_constant_identifier_names
                       String Surname = soyisimController.text.trim();
                       //hata mesaji
                       if (Name.isEmpty || Surname.isEmpty) {
@@ -101,9 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         await prefs.setString('userName', Name);
                         await prefs.setString('userSurname', Surname);
                         await prefs.setBool('isLoggedIn', true);
-
-                        print("Hafızaya kaydedildi: $Name $Surname");
+                        // ignore: use_build_context_synchronously
                         Navigator.of(context).pushReplacement(
+                          //pushReplacement, kullanıcının geri tuşuna bastığında tekrar giriş ekranına dönmesini engeller
                           MaterialPageRoute(
                             builder: (context) => const HomeScreen(),
                           ),

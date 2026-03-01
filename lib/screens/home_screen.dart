@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        title: const Text("Home Screen"),
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
       ),
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Text(
                 "Hello, $Name! ",
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
