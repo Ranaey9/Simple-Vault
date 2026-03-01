@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_vault/Password/password_list_screen.dart';
-import 'package:simple_vault/settings/settings_screen.dart';
+import 'package:simple_vault/settings/settings_screen.dart'; 
+import 'package:simple_vault/notes_screen/secret_notes_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
-        actions: [
+     actions: [
           IconButton(
             icon: const Icon(
               Icons.settings,
@@ -72,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
               subtitle: "Personal thoughts and logs",
               icon: Icons.notes_rounded,
               iconColor: const Color.fromARGB(255, 241, 162, 59),
-              onTap: () {
-                Navigator.pushNamed(context, '/Secret Notes');
+               onTap: () {
+                Navigator.pushNamed(context, '/SecretNotes');
               },
             ),
             buildVaultCard(
@@ -104,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
-      color: backgroundColor,
+      color: const Color.fromARGB(255, 244, 241, 241),
       elevation: 3,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
