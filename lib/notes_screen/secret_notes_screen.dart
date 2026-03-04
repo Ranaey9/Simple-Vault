@@ -9,7 +9,6 @@ class SecretNotesScreen extends StatefulWidget {
 }
 
 class _SecretNotesScreenState extends State<SecretNotesScreen> {
-  // Notları sakladığımız liste (Başlık, İçerik ve Tarih tutuyor)
   List<Map<String, String>> noteList = [];
 
   @override
@@ -33,10 +32,9 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                   child: ListTile(
                     title: Text(noteList[index]['title'] ?? "", style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(noteList[index]['date'] ?? ""), // Altında tarih yazar
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 18), // İstediğin > işareti
+                    subtitle: Text(noteList[index]['date'] ?? ""), 
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18), 
                     onTap: () {
-                      // Buraya tıklandığında notun içeriğini gösteren bir popup veya sayfa yapabiliriz
                       _showNoteDetail(context, noteList[index]);
                     },
                   ),
@@ -46,7 +44,6 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orangeAccent,
         onPressed: () async {
-          // Navigasyon ile yeni sayfaya gidiyoruz ve oradan gelen veriyi bekliyoruz
           final result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const AddNoteScreen()),
@@ -64,7 +61,6 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
     );
   }
 
-  // Not detayını görmek için basit bir pencere
   void _showNoteDetail(BuildContext context, Map<String, String> note) {
     showDialog(
       context: context,
