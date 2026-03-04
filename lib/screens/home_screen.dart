@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icons.qr_code_rounded,
               iconColor: const Color.fromARGB(255, 81, 187, 136),
               onTap: () {
-                Navigator.pushNamed(context, '/Quick Codes');
+                Navigator.pushNamed(context, '/quickCodes');
               },
             ),
             const Spacer(),
