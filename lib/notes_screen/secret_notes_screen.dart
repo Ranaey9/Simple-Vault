@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'add_note_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SecretNotesScreen extends StatefulWidget {
   const SecretNotesScreen({super.key});
@@ -10,6 +13,31 @@ class SecretNotesScreen extends StatefulWidget {
 
 class _SecretNotesScreenState extends State<SecretNotesScreen> {
   List<Map<String, String>> noteList = [];
+  Future saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setString("Note List", jsonEncode(noteList));
+  }
+
+  Future loadData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? data = prefs.getString("Note List");
+
+    if (data != null) {
+      final List<dynamic> jsonData = jsonDecode(data);
+      setState(() {
+        noteList = jsonData
+            .map((item) => Map<String, String>.from(item))
+            .toList();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +50,31 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
         centerTitle: true,
       ),
       body: noteList.isEmpty
-          ? const Center(child: Text("No secret notes yet.", style: TextStyle(color: Colors.grey)))
+          ? const Center(
+              child: Text(
+                "No secret notes yet.",
+                style: TextStyle(color: Colors.grey),
+              ),
+            )
           : ListView.builder(
               itemCount: noteList.length,
               itemBuilder: (context, index) {
                 return Card(
-                  color:const Color(0xFFF5F5F5),
-                  margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                  color: const Color(0xFFF5F5F5),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 8,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   child: ListTile(
-                    title: Text(noteList[index]['title'] ?? "", style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(noteList[index]['date'] ?? ""), 
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 18), 
+                    title: Text(
+                      noteList[index]['title'] ?? "",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(noteList[index]['date'] ?? ""),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () {
                       _showNoteDetail(context, noteList[index]);
                     },
@@ -54,6 +95,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
             setState(() {
               noteList.add(result);
             });
+            saveData();
           }
         },
         child: const Icon(Icons.add),
@@ -68,7 +110,12 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
         backgroundColor: const Color(0xFFF5F5F5),
         title: Text(note['title'] ?? ""),
         content: Text(note['content'] ?? ""),
-        actions: [TextButton(onPressed: () => Navigator.pop(context), child: const Text("Close"))],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Close"),
+          ),
+        ],
       ),
     );
   }
