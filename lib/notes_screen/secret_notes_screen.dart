@@ -24,6 +24,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
     String? data = prefs.getString("Note List");
 
     if (data != null) {
+      // JSON listeye çevirip güvenli bir şekilde Map<String, String>'e dönüştürüyoruz
       final List<dynamic> jsonData = jsonDecode(data);
       setState(() {
         noteList = jsonData
