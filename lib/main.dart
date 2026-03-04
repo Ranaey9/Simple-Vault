@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simple_vault/Password/password_list_screen.dart';
 import 'package:simple_vault/notes_screen/secret_notes_screen.dart';
+import 'package:simple_vault/quickCodes_screen/quick_codes_screen.dart';
 import 'package:simple_vault/screens/home_screen.dart';
 import 'package:simple_vault/screens/login_screen.dart';
 import 'package:simple_vault/settings/settings_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     '/settings': (context) => const SettingsScreen(),
     '/passwords': (context) => PasswordListScreen(),
     '/SecretNotes': (context) => const SecretNotesScreen(),
+    '/quickCodes': (context) => const QuickCodesScreen(),
   },
 );
   }
