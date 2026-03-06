@@ -11,10 +11,25 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
+  void _saveNote() {
+    if (titleController.text.isNotEmpty) {
+      String formattedDate =
+          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} "
+          "${DateTime.now().hour}:${DateTime.now().minute}";
+
+      Navigator.pop(context, {
+        'title': titleController.text,
+        'content': contentController.text,
+        'date': formattedDate,
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
+
       appBar: AppBar(
         backgroundColor: const Color(0xFFF5F5F5),
         title: const Text("New Note"),
@@ -25,6 +40,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           ),
         ],
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -37,11 +53,13 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 border: InputBorder.none,
               ),
             ),
-            const Divider(), // Araya ince bir çizgi
+
+            const Divider(),
+
             Expanded(
               child: TextField(
                 controller: contentController,
-                maxLines: null, // Yazdıkça aşağı iner
+                maxLines: null,
                 decoration: const InputDecoration(
                   hintText: "Start writing...",
                   border: InputBorder.none,
@@ -52,20 +70,5 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         ),
       ),
     );
-  }
-
-  void _saveNote() {
-    Color:
-    Colors.white;
-    if (titleController.text.isNotEmpty) {
-      String formattedDate =
-          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}";
-      // Verileri paketleyip bir önceki sayfaya geri gönderiyoruz
-      Navigator.pop(context, {
-        'title': titleController.text,
-        'content': contentController.text,
-        'date': formattedDate,
-      });
-    }
   }
 }
