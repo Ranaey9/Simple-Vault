@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'add_note_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,10 +12,10 @@ class SecretNotesScreen extends StatefulWidget {
 
 class _SecretNotesScreenState extends State<SecretNotesScreen> {
   List<Map<String, String>> noteList = [];
+
   Future saveData() async {
     final prefs = await SharedPreferences.getInstance();
-
-    prefs.setString("Note List", jsonEncode(noteList));
+    await prefs.setString("Note List", jsonEncode(noteList));
   }
 
   Future loadData() async {
@@ -24,14 +23,64 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
     String? data = prefs.getString("Note List");
 
     if (data != null) {
-      // JSON listeye çevirip güvenli bir şekilde Map<String, String>'e dönüştürüyoruz
       final List<dynamic> jsonData = jsonDecode(data);
+
       setState(() {
         noteList = jsonData
             .map((item) => Map<String, String>.from(item))
             .toList();
       });
     }
+  }
+
+  void deleteNote(int index) async {
+    noteList.removeAt(index);
+    await saveData();
+    setState(() {});
+  }
+
+  Future<bool?> showDeleteDialog() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFFF5F5F5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            "Delete Note",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: const Text(
+            "Do you want to delete this note?",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: const Text(
+                "No",
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -44,12 +93,14 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
+
       appBar: AppBar(
         title: const Text("Secret Notes"),
         backgroundColor: const Color(0xFFF5F5F5),
         elevation: 0,
         centerTitle: true,
       ),
+
       body: noteList.isEmpty
           ? const Center(
               child: Text(
@@ -60,42 +111,92 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
           : ListView.builder(
               itemCount: noteList.length,
               itemBuilder: (context, index) {
-                return Card(
-                  color: const Color(0xFFF5F5F5),
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 8,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      noteList[index]['title'] ?? "",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+
+                return Dismissible(
+                  key: Key(noteList[index]['title']! + index.toString()),
+                  direction: DismissDirection.horizontal,
+
+                  confirmDismiss: (direction) async {
+                    return await showDeleteDialog();
+                  },
+
+                  onDismissed: (direction) {
+                    deleteNote(index);
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Note deleted"),
+                      ),
+                    );
+                  },
+
+                  background: Container(
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.only(left: 20),
+                    color: Colors.red,
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: 30,
                     ),
-                    subtitle: Text(noteList[index]['date'] ?? ""),
-                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
-                    onTap: () {
-                      _showNoteDetail(context, noteList[index]);
-                    },
+                  ),
+
+                  secondaryBackground: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 20),
+                    color: Colors.red,
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
+
+                  child: Card(
+                    color: const Color(0xFFF5F5F5),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 15,
+                      vertical: 8,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        noteList[index]['title'] ?? "",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Text(noteList[index]['date'] ?? ""),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                      ),
+                      onTap: () {
+                        _showNoteDetail(context, noteList[index]);
+                      },
+                    ),
                   ),
                 );
               },
             ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orangeAccent,
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddNoteScreen()),
+            MaterialPageRoute(
+              builder: (context) => const AddNoteScreen(),
+            ),
           );
 
-          // Eğer yeni bir not kaydedilip dönüldüyse listeye ekle
           if (result != null) {
             setState(() {
               noteList.add(result);
             });
+
             saveData();
           }
         },
