@@ -37,7 +37,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
       });
     }
   }
-
+  
   // Sayfa açılır açılmaz hafızadan veriyi okur
   @override
   void initState() {
