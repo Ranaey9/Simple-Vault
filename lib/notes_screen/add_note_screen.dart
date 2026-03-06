@@ -14,13 +14,13 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-         backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF5F5F5),
         title: const Text("New Note"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.check),
+            icon: const Icon(Icons.check, color: Colors.deepOrange, size: 30),
             onPressed: _saveNote,
           ),
         ],
@@ -34,7 +34,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               decoration: const InputDecoration(
                 hintText: "Title",
-                border: InputBorder.none, 
+                border: InputBorder.none,
               ),
             ),
             const Divider(), // Araya ince bir çizgi
@@ -55,9 +55,11 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   }
 
   void _saveNote() {
-    Color:Colors.white;
+    Color:
+    Colors.white;
     if (titleController.text.isNotEmpty) {
-      String formattedDate = "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}";
+      String formattedDate =
+          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}";
       // Verileri paketleyip bir önceki sayfaya geri gönderiyoruz
       Navigator.pop(context, {
         'title': titleController.text,
