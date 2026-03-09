@@ -6,7 +6,6 @@ import 'package:simple_vault/screens/home_screen.dart';
 import 'package:simple_vault/screens/login_screen.dart';
 import 'package:simple_vault/settings/settings_screen.dart';
 
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -15,16 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-  debugShowCheckedModeBanner: false,
-  initialRoute: '/login',
-  routes: {
-    '/home': (context) => const HomeScreen(),
-    '/login': (context) => const LoginScreen(),
-    '/settings': (context) => const SettingsScreen(),
-    '/passwords': (context) => PasswordListScreen(),
-    '/SecretNotes': (context) => const SecretNotesScreen(),
-    '/quickCodes': (context) => const QuickCodesScreen(),
-  },
-);
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/login',
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/settings': (context) => const SettingsScreen(),
+        '/passwords': (context) => PasswordListScreen(),
+        '/SecretNotes': (context) => const SecretNotesScreen(),
+        '/quickCodes': (context) => const QuickCodesScreen(),
+        '/setting': (context) => const SettingsScreen(),
+      },
+    );
   }
 }
