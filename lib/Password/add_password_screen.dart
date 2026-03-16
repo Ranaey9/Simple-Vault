@@ -21,68 +21,76 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          /// SITE
-          TextField(
-            controller: siteController,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.language),
-              filled: true,
-              fillColor: Colors.white,
-              labelText: "Site Name",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+      padding: EdgeInsets.only(
+        top: 20,
+        left: 20,
+        right: 20,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+      ),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            /// SITE
+            TextField(
+              controller: siteController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.language),
+                filled: true,
+                fillColor: Colors.white,
+                labelText: "Site Name",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          /// PASSWORD
-          TextField(
-            controller: passwordController,
-            obscureText: gizliMi,
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.visibility),
-              filled: true,
-              fillColor: Colors.white,
-              labelText: "Password",
+            /// PASSWORD
+            TextField(
+              controller: passwordController,
+              obscureText: gizliMi,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.visibility),
+                filled: true,
+                fillColor: Colors.white,
+                labelText: "Password",
 
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
 
-              suffixIcon: IconButton(
-                icon: Icon(gizliMi ? Icons.visibility_off : Icons.visibility),
-                onPressed: () {
-                  setState(() {
-                    gizliMi = !gizliMi;
-                  });
-                },
+                suffixIcon: IconButton(
+                  icon: Icon(gizliMi ? Icons.visibility_off : Icons.visibility),
+                  onPressed: () {
+                    setState(() {
+                      gizliMi = !gizliMi;
+                    });
+                  },
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          ElevatedButton(
-            //boş değilse kaydet
-            onPressed: () {
-              if (siteController.text.isNotEmpty &&
-                  passwordController.text.isNotEmpty) {
-                widget.onSave(siteController.text, passwordController.text);
-                Navigator.pop(context);
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+            ElevatedButton(
+              //boş değilse kaydet
+              onPressed: () {
+                if (siteController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  widget.onSave(siteController.text, passwordController.text);
+                  Navigator.pop(context);
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+              ),
+              child: const Text("Save"),
             ),
-            child: const Text("Save"),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
