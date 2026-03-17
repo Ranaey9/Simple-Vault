@@ -84,7 +84,7 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: const Color(0xFF005AC1),
                 foregroundColor: const Color.fromARGB(255, 255, 255, 255),
               ),
               child: const Text("Save"),

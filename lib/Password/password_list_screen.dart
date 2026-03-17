@@ -81,7 +81,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                   child: ListTile(
                     leading: const Icon(
                       Icons.vpn_key,
-                      color: Colors.blueAccent,
+                      color:  Color(0xFF005AC1),
                     ),
 
                     title: Text(item['site'] ?? ""),
@@ -100,7 +100,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                         IconButton(
                           icon: Icon(
                             gizliMi ? Icons.visibility_off : Icons.visibility,
-                            color: Colors.blueAccent,
+                            color:  Color(0xFF005AC1),
                           ),
                           onPressed: () {
                             setState(() {
@@ -129,7 +129,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor:  Color(0xFF005AC1),
         onPressed: () {
           showModalBottomSheet(
             context: context,
