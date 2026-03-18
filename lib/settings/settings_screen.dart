@@ -11,10 +11,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
         title: Text("Setting"),
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF8F9FF),
       ),
       body: Column(
         children: [
@@ -34,7 +34,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 //tıklanmış
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Colors.black, width: 2),
+                  borderSide: BorderSide(color: const Color.fromARGB(255, 169, 169, 169), width: 2),
                 ),
               ),
             ),

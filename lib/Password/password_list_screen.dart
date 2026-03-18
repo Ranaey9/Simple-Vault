@@ -48,10 +48,10 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
         title: const Text("My Passwords"),
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF8F9FF),
         elevation: 0,
       ),
       body: passwordList.isEmpty
@@ -70,7 +70,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                 final item = passwordList[index];
 
                 return Card(
-                  color: Colors.white,
+                  color:  Color.fromARGB(255, 250, 250, 254),
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,

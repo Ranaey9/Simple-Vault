@@ -68,10 +68,10 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
         title: const Text("Quick Codes"),
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF8F9FF),
         elevation: 0,
         centerTitle: true,
       ),
@@ -93,8 +93,8 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                     GestureDetector(
                       onTap: () => _copyToClipboard(item["code"]!),
                       child: Card(
-                        color: Colors.white,
-                        elevation: 4,
+                        color:  Color.fromARGB(255, 250, 250, 254),
+                        elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -136,7 +136,7 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                           child: const Icon(
                             Icons.close,
                             size: 16,
-                            color: Colors.white,
+                            color:Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ),
@@ -146,7 +146,7 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor:  const Color(0xFF005AC1),
         onPressed: _openAddSheet,
         child: const Icon(Icons.add, color: Colors.white),
       ),

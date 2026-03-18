@@ -44,7 +44,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: const Color(0xFFF5F5F5),
+          backgroundColor: Color(0xFFF8F9FF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -52,18 +52,13 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
             "Delete Note",
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          content: const Text(
-            "Do you want to delete this note?",
-          ),
+          content: const Text("Do you want to delete this note?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text(
-                "No",
-                style: TextStyle(color: Colors.grey),
-              ),
+              child: const Text("No", style: TextStyle(color: Colors.grey)),
             ),
             ElevatedButton(
               onPressed: () {
@@ -92,11 +87,11 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F9FF),
 
       appBar: AppBar(
         title: const Text("Secret Notes"),
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF8F9FF),
         elevation: 0,
         centerTitle: true,
       ),
@@ -111,7 +106,6 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
           : ListView.builder(
               itemCount: noteList.length,
               itemBuilder: (context, index) {
-
                 return Dismissible(
                   key: Key(noteList[index]['title']! + index.toString()),
                   direction: DismissDirection.horizontal,
@@ -124,9 +118,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                     deleteNote(index);
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Note deleted"),
-                      ),
+                      const SnackBar(content: Text("Note deleted")),
                     );
                   },
 
@@ -153,7 +145,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                   ),
 
                   child: Card(
-                    color: const Color(0xFFF5F5F5),
+                    color: Color.fromARGB(255, 250, 250, 254),
                     margin: const EdgeInsets.symmetric(
                       horizontal: 15,
                       vertical: 8,
@@ -164,15 +156,10 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                     child: ListTile(
                       title: Text(
                         noteList[index]['title'] ?? "",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(noteList[index]['date'] ?? ""),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 18,
-                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                       onTap: () {
                         _showNoteDetail(context, noteList[index]);
                       },
@@ -183,13 +170,11 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
             ),
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.orangeAccent,
+        backgroundColor: const Color(0xFF005AC1),
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const AddNoteScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => const AddNoteScreen()),
           );
 
           if (result != null) {
@@ -200,7 +185,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
             saveData();
           }
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -209,7 +194,7 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF8F9FF),
         title: Text(note['title'] ?? ""),
         content: Text(note['content'] ?? ""),
         actions: [

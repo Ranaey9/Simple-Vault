@@ -28,14 +28,14 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor:const Color(0xFFF8F9FF),
 
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor: const Color(0xFFF8F9FF),
         title: const Text("New Note"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.check, color: Colors.deepOrange, size: 30),
+            icon: const Icon(Icons.check, color: Color(0xFF005AC1), size: 30),
             onPressed: _saveNote,
           ),
         ],

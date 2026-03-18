@@ -30,15 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor:const Color(0xFFF8F9FF),
         elevation: 0,
      actions: [
           IconButton(
             icon: const Icon(
               Icons.settings,
-              color: Color.fromARGB(255, 72, 69, 69),
+              color:  Color.fromARGB(255, 0, 0, 0),
               size: 28,
             ),
             onPressed: () {
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Passwords",
               subtitle: "Securely store your login info",
               icon: Icons.vpn_key_rounded,
-              iconColor: const Color.fromARGB(255, 76, 130, 222),
+              iconColor: const Color(0xFF005AC1),
               onTap: () {
                 Navigator.pushNamed(context, '/passwords');
               },
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Secret Notes",
               subtitle: "Personal thoughts and logs",
               icon: Icons.notes_rounded,
-              iconColor: const Color.fromARGB(255, 241, 162, 59),
+              iconColor: const Color(0xFF005AC1),
                onTap: () {
                 Navigator.pushNamed(context, '/SecretNotes');
               },
@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Quick Codes",
               subtitle: "Door codes and pins",
               icon: Icons.qr_code_rounded,
-              iconColor: const Color.fromARGB(255, 81, 187, 136),
+              iconColor: const Color(0xFF005AC1),
               onTap: () {
                 Navigator.pushNamed(context, '/quickCodes');
               },
@@ -102,12 +102,12 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required Color iconColor,
     required VoidCallback onTap,
-    Color backgroundColor = Colors.white,
+    Color backgroundColor = const Color(0xFFF8F9FF),
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
-      color: const Color.fromARGB(255, 244, 241, 241),
-      elevation: 3,
+      color:Color.fromARGB(255, 248, 249, 251),
+      elevation: 1,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(
