@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_vault/screens/password_list_screen.dart';
+import 'package:simple_vault/Password/password_list_screen.dart';
+import 'package:simple_vault/settings/settings_screen.dart'; 
+import 'package:simple_vault/notes_screen/secret_notes_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,31 +19,46 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadUserInfo(); // Sayfa açılır açılmaz hafızadan ismi okuyor
   }
 
-  String Name = "";
+  String name = "";
   Future<void> _loadUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      Name = prefs.getString('userName') ?? "User";
+      name = prefs.getString('userName') ?? "User";
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
-        title: const Text("Home Screen"),
-        backgroundColor: const Color(0xFFF5F5F5),
+        backgroundColor:const Color(0xFFF8F9FF),
         elevation: 0,
+<<<<<<< HEAD
+        actions: [
+=======
+     actions: [
+>>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
+          IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color:  Color.fromARGB(255, 0, 0, 0),
+              size: 28,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 40),
               child: Text(
-                "Hello, $Name! ",
+                "Hello, $name! ",
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
@@ -49,54 +67,44 @@ class _HomeScreenState extends State<HomeScreen> {
               title: "Passwords",
               subtitle: "Securely store your login info",
               icon: Icons.vpn_key_rounded,
-              iconColor: Colors.blueAccent,
+              iconColor: const Color(0xFF005AC1),
               onTap: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const PasswordListScreen()),
-  );
-},
+                Navigator.pushNamed(context, '/passwords');
+              },
             ),
             buildVaultCard(
               context: context,
               title: "Secret Notes",
               subtitle: "Personal thoughts and logs",
               icon: Icons.notes_rounded,
-              iconColor: Colors.orangeAccent,
-              onTap: () => print("Notes Tapped"),
+<<<<<<< HEAD
+              iconColor: const Color.fromARGB(255, 241, 162, 59),
+              onTap: () {
+                Navigator.pushNamed(context, '/Secret Notes');
+=======
+              iconColor: const Color(0xFF005AC1),
+               onTap: () {
+                Navigator.pushNamed(context, '/SecretNotes');
+>>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
+              },
             ),
             buildVaultCard(
               context: context,
               title: "Quick Codes",
               subtitle: "Door codes and pins",
               icon: Icons.qr_code_rounded,
-              iconColor: Colors.greenAccent,
-              onTap: () => print("Codes Tapped"),
+<<<<<<< HEAD
+              iconColor: const Color.fromARGB(255, 81, 187, 136),
+              onTap: () {
+                Navigator.pushNamed(context, '/Quick Codes');
+=======
+              iconColor: const Color(0xFF005AC1),
+              onTap: () {
+                Navigator.pushNamed(context, '/quickCodes');
+>>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
+              },
             ),
             const Spacer(),
-            TextButton.icon(
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs
-                    .clear(); // Tüm verileri siler
-
-                // Kullanıcıyı giriş ekranına geri gönderir ve geri gelmesini engeller
-                Navigator.of(
-                  context,
-                ).pushNamedAndRemoveUntil('/', (route) => false);
-              },
-              icon: const Icon(Icons.logout, color: Colors.redAccent),
-              label: const Text(
-                "Log Out",
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ), 
           ],
         ),
       ),
@@ -110,10 +118,17 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required Color iconColor,
     required VoidCallback onTap,
+    Color backgroundColor = const Color(0xFFF8F9FF),
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
+<<<<<<< HEAD
+      color: backgroundColor,
       elevation: 3,
+=======
+      color:Color.fromARGB(255, 248, 249, 251),
+      elevation: 1,
+>>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: InkWell(

@@ -1,16 +1,46 @@
-# simple_vault
+#  Simple Vault
 
-A new Flutter project.
+A minimalist, secure digital vault application built with Flutter. **Simple Vault** allows users to store passwords, secret notes, and quick access codes with a clean and intuitive user interface.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+##  Features
 
-A few resources to get you started if this is your first Flutter project:
+*   **User Session Management:** Persistent login state using `shared_preferences`.
+*   **Secure Password Storage:** Categorized list for managing credentials.
+*   **Secret Notes:** A dedicated space for private information and daily logs.
+*   **Quick Codes:** Fast access for door pins, Wi-Fi passwords, and short-term data.
+*   **Dynamic UI:** Personalized greeting and profile management based on user input.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tech Stack
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+*   **Frontend:** [Flutter](https://flutter.dev) (Dart)
+*   **State & Storage:** `shared_preferences` for local key-value persistence.
+*   **Utilities:** `url_launcher` for external link integration.
+*   **Architecture:** Modular screen structure for high maintainability.
+
+---
+
+## Installation & Setup
+
+Ensure you have the Flutter SDK installed on your machine.
+
+Clone the repository:
+```bash
+git clone https://github.com/Ranaey9/simple_vault.git
+```
+
+Navigate to the project folder:
+```bash
+cd simple_vault
+```
+
+Install dependencies:
+```bash
+flutter pub get
+```
+
+Run the app:
+```bash
+flutter run
+```
