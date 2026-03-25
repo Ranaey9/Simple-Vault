@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_vault/Password/password_list_screen.dart';
-import 'package:simple_vault/settings/settings_screen.dart'; 
+import 'package:simple_vault/settings/settings_screen.dart';
 import 'package:simple_vault/notes_screen/secret_notes_screen.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,21 +31,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
-        backgroundColor:const Color(0xFFF8F9FF),
+        backgroundColor: const Color(0xFFF8F9FF),
         elevation: 0,
-     actions: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.settings,
-                color:  Color.fromARGB(255, 0, 0, 0),
-                size: 28,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/settings');
-              },
+        actions: [
+          IconButton(
+            padding: const EdgeInsets.only(right: 20.0, top: 10.0),
+            constraints: const BoxConstraints(),
+            icon: const Icon(
+              Icons.settings,
+              color: Color.fromARGB(255, 0, 0, 0),
+              size: 28,
             ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/settings');
+            },
           ),
         ],
       ),
@@ -77,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
               subtitle: "Personal thoughts and logs",
               icon: Icons.notes_rounded,
               iconColor: const Color(0xFF005AC1),
-               onTap: () {
+              onTap: () {
                 Navigator.pushNamed(context, '/SecretNotes');
               },
             ),
@@ -109,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }) {
     final screenHeight = MediaQuery.of(context).size.height;
     return Card(
-      color:Color.fromARGB(255, 248, 249, 251),
+      color: Color.fromARGB(255, 248, 249, 251),
       elevation: 1,
       margin: const EdgeInsets.symmetric(vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
