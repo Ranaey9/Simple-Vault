@@ -73,7 +73,11 @@ class _AddQuickCodeState extends State<AddQuickCode> {
                   setState(() => _labelFocus = hasFocus),
               child: TextField(
                 controller: labelController,
-                decoration: _buildDecoration("Label", Icons.label, _labelFocus),
+                decoration: _buildDecoration(
+                  "Label",
+                  Icons.label,
+                  _labelFocus,
+                ).copyWith(floatingLabelBehavior: FloatingLabelBehavior.never),
               ),
             ),
             const SizedBox(height: 20),
@@ -88,7 +92,7 @@ class _AddQuickCodeState extends State<AddQuickCode> {
                   "Code / Password",
                   Icons.code,
                   _codeFocus,
-                ),
+                ).copyWith(floatingLabelBehavior: FloatingLabelBehavior.never),
               ),
             ),
             const SizedBox(height: 25),
