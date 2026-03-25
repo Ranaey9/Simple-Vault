@@ -37,7 +37,9 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                 prefixIcon: const Icon(Icons.language),
                 filled: true,
                 fillColor: Colors.white,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
                 labelText: "Site Name",
+                hintText: "Site Name",
                 floatingLabelStyle: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.w600,
@@ -63,7 +65,9 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                 prefixIcon: const Icon(Icons.lock_outline),
                 filled: true,
                 fillColor: Colors.white,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
                 labelText: "Password",
+                hintText: "Site Name",
                 floatingLabelStyle: TextStyle(
                   color: primaryColor,
                   fontWeight: FontWeight.w600,
