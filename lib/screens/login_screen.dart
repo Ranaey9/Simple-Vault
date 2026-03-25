@@ -35,7 +35,9 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.lock_person_rounded, size: 70, color: primaryColor),
+
                 const SizedBox(height: 24),
+
                 const Text(
                   "Welcome",
                   style: TextStyle(
@@ -44,10 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Color(0xFF1A1C1E),
                   ),
                 ),
+
                 const SizedBox(height: 40),
+
                 TextField(
                   controller: isimController,
-                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: "Name",
                     prefixIcon: Icon(
@@ -56,7 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: primaryColor,
                     ),
                     filled: true,
-                    fillColor: const Color(0xFF9898A4).withAlpha(10),
+                    fillColor: const Color.fromARGB(
+                      255,
+                      152,
+                      152,
+                      164,
+                    ).withValues(alpha: 0.04),
                     floatingLabelStyle: TextStyle(color: primaryColor),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -73,9 +81,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
+
                 TextField(
                   controller: soyisimController,
-                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                     labelText: "Surname",
                     prefixIcon: Icon(
@@ -84,7 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: primaryColor,
                     ),
                     filled: true,
-                    fillColor: const Color(0xFF9898A4).withAlpha(10),
+                    fillColor: const Color.fromARGB(
+                      255,
+                      152,
+                      152,
+                      164,
+                    ).withValues(alpha: 0.04),
                     floatingLabelStyle: TextStyle(color: primaryColor),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -100,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 32),
+
                 SizedBox(
                   width: double.infinity,
                   height: 54,

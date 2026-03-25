@@ -11,21 +11,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
-<<<<<<< HEAD
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F5F5),
-
-        title: const Text("New Note"),
-        actions: [
-          IconButton(icon: const Icon(Icons.check), onPressed: _saveNote),
-        ],
-      ),
-=======
   void _saveNote() {
     if (titleController.text.isNotEmpty) {
       String formattedDate =
@@ -56,7 +41,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         ],
       ),
 
->>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -69,13 +53,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 border: InputBorder.none,
               ),
             ),
-<<<<<<< HEAD
-            const Divider(), // Araya ince bir çizgi
-            Expanded(
-              child: TextField(
-                controller: contentController,
-                maxLines: null, // Yazdıkça aşağı iner
-=======
 
             const Divider(),
 
@@ -83,7 +60,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               child: TextField(
                 controller: contentController,
                 maxLines: null,
->>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
                 decoration: const InputDecoration(
                   hintText: "Start writing...",
                   border: InputBorder.none,
@@ -95,20 +71,4 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
       ),
     );
   }
-<<<<<<< HEAD
-
-  void _saveNote() {
-    if (titleController.text.isNotEmpty) {
-      String formattedDate =
-          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} ${DateTime.now().hour}:${DateTime.now().minute}";
-      Navigator.pop(context, {
-        //Veriyi geri sayfaya gönderir
-        'title': titleController.text,
-        'content': contentController.text,
-        'date': formattedDate,
-      });
-    }
-  }
-=======
->>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82
 }

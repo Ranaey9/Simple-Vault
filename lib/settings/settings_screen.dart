@@ -34,19 +34,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', false);
 
-    if (!mounted) return;
     Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
   }
 
   Future<void> _launchGitHub() async {
-    final Uri url = Uri.parse("https://github.com/Ranaey9");
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
+    const url = "https://github.com/Ranaey9";
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Could not launch GitHub")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Could not launch GitHub")),
+      );
     }
   }
 
@@ -63,6 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // PROFILE
           Container(
             padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
@@ -99,12 +98,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ),
+
           const SizedBox(height: 30),
+
+          // SYSTEM
           const Text(
             "SYSTEM",
             style: TextStyle(color: Colors.grey, fontSize: 12),
           ),
           const SizedBox(height: 8),
+
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -119,7 +122,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ),
+
           const SizedBox(height: 25),
+
+          // LOGOUT
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -138,12 +144,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () => _logout(context),
             ),
           ),
+
           const SizedBox(height: 30),
+
+          // FOOTER
           Center(
             child: Column(
               children: [
                 const Text(
-                  "Designed & Developed by Rana",
+                  "Designed & Developed by You",
                   style: TextStyle(color: Colors.grey, fontSize: 13),
                 ),
                 const SizedBox(height: 5),

@@ -93,7 +93,7 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                     GestureDetector(
                       onTap: () => _copyToClipboard(item["code"]!),
                       child: Card(
-                        color: Color.fromARGB(255, 250, 250, 254),
+                        color:  Color.fromARGB(255, 250, 250, 254),
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -136,7 +136,7 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                           child: const Icon(
                             Icons.close,
                             size: 16,
-                            color: Color.fromARGB(255, 255, 255, 255),
+                            color:Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ),
@@ -146,7 +146,7 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF005AC1),
+        backgroundColor:  const Color(0xFF005AC1),
         onPressed: _openAddSheet,
         child: const Icon(Icons.add, color: Colors.white),
       ),
