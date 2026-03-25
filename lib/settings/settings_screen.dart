@@ -1,25 +1,4 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
-      appBar: AppBar(
-        title: const Text("Settings"),
-        backgroundColor: const Color(0xFFF5F5F5),
-        elevation: 0,
-      ),
-      body: const Center(
-        child: Text("Settings Page"),
-      ),
-    );
-  }
-}
-=======
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -183,4 +162,3 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
->>>>>>> 456fa3ba3705c8613a12a02bce6eaa82d2492b82

@@ -37,7 +37,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
       });
     }
   }
-  
+
   // Sayfa açılır açılmaz hafızadan veriyi okur
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                 final item = passwordList[index];
 
                 return Card(
-                  color:  Color.fromARGB(255, 250, 250, 254),
+                  color: Color.fromARGB(255, 250, 250, 254),
                   margin: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 8,
@@ -81,7 +81,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                   child: ListTile(
                     leading: const Icon(
                       Icons.vpn_key,
-                      color:  Color(0xFF005AC1),
+                      color: Color(0xFF005AC1),
                     ),
 
                     title: Text(item['site'] ?? ""),
@@ -100,7 +100,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                         IconButton(
                           icon: Icon(
                             gizliMi ? Icons.visibility_off : Icons.visibility,
-                            color:  Color(0xFF005AC1),
+                            color: Color(0xFF005AC1),
                           ),
                           onPressed: () {
                             setState(() {
@@ -129,7 +129,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:  Color(0xFF005AC1),
+        backgroundColor: Color(0xFF005AC1),
         onPressed: () {
           showModalBottomSheet(
             context: context,
