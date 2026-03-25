@@ -22,6 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    
     final Color primaryColor = const Color(0xFF005AC1);
     final Color surfaceColor = const Color(0xFFF8F9FF);
 
@@ -30,42 +33,42 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.lock_person_rounded, size: 70, color: primaryColor),
+                Icon(
+                  Icons.lock_person_rounded, 
+                  size: screenHeight * 0.08, 
+                  color: primaryColor
+                ),
 
-                const SizedBox(height: 24),
+                SizedBox(height: screenHeight * 0.03),
 
-                const Text(
+                Text(
                   "Welcome",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: screenWidth * 0.06,
                     fontWeight: FontWeight.normal,
-                    color: Color(0xFF1A1C1E),
+                    color: const Color(0xFF1A1C1E),
                   ),
                 ),
 
-                const SizedBox(height: 40),
+                SizedBox(height: screenHeight * 0.05),
 
                 TextField(
                   controller: isimController,
                   decoration: InputDecoration(
                     labelText: "Name",
+                    hintText: "Name",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
                     prefixIcon: Icon(
                       Icons.person_outline,
                       size: 20,
                       color: primaryColor,
                     ),
                     filled: true,
-                    fillColor: const Color.fromARGB(
-                      255,
-                      152,
-                      152,
-                      164,
-                    ).withValues(alpha: 0.04),
-                    floatingLabelStyle: TextStyle(color: primaryColor),
+                    fillColor: const Color.fromARGB(255, 152, 152, 164).withValues(alpha: 0.04),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -76,29 +79,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 14,
+                      vertical: 18,
                     ),
                   ),
                 ),
+                
                 const SizedBox(height: 16),
 
                 TextField(
                   controller: soyisimController,
                   decoration: InputDecoration(
                     labelText: "Surname",
+                    hintText: "Surname",
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
                     prefixIcon: Icon(
                       Icons.badge_outlined,
                       size: 18,
                       color: primaryColor,
                     ),
                     filled: true,
-                    fillColor: const Color.fromARGB(
-                      255,
-                      152,
-                      152,
-                      164,
-                    ).withValues(alpha: 0.04),
-                    floatingLabelStyle: TextStyle(color: primaryColor),
+                    fillColor: const Color.fromARGB(255, 152, 152, 164).withValues(alpha: 0.04),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -109,16 +109,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
-                      vertical: 14,
+                      vertical: 18,
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                SizedBox(height: screenHeight * 0.04),
 
                 SizedBox(
                   width: double.infinity,
-                  height: 54,
+                  height: 56,
                   child: FilledButton(
                     onPressed: _handleLogin,
                     style: FilledButton.styleFrom(
@@ -128,7 +128,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text("Log in", style: TextStyle(fontSize: 16)),
+                    child: Text(
+                      "Log in", 
+                      style: TextStyle(fontSize: screenWidth * 0.04)
+                    ),
                   ),
                 ),
               ],

@@ -40,25 +40,38 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
   }
 
   Future<bool?> showDeleteDialog() {
+    final double screenWidth = MediaQuery.of(context).size.width;
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Color(0xFFF8F9FF),
+          backgroundColor: const Color(0xFFF8F9FF),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text(
+          title: Text(
             "Delete Note",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: screenWidth * 0.05,
+            ),
           ),
-          content: const Text("Do you want to delete this note?"),
+          content: Text(
+            "Do you want to delete this note?",
+            style: TextStyle(fontSize: screenWidth * 0.04),
+          ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context, false);
               },
-              child: const Text("No", style: TextStyle(color: Colors.grey)),
+              child: Text(
+                "No",
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: screenWidth * 0.04,
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
@@ -70,7 +83,10 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Text("Yes"),
+              child: Text(
+                "Yes",
+                style: TextStyle(fontSize: screenWidth * 0.04),
+              ),
             ),
           ],
         );
@@ -86,21 +102,34 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
-
-      appBar: AppBar(
-        title: const Text("Secret Notes"),
-        backgroundColor: const Color(0xFFF8F9FF),
-        elevation: 0,
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Text(
+              "Secret Notes",
+              style: TextStyle(fontSize: screenWidth * 0.05),
+            ),
+          ),
+          backgroundColor: const Color(0xFFF8F9FF),
+          elevation: 0,
+          centerTitle: true,
+        ),
       ),
-
       body: noteList.isEmpty
-          ? const Center(
+          ? Center(
               child: Text(
                 "No secret notes yet.",
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: screenWidth * 0.045,
+                ),
               ),
             )
           : ListView.builder(
@@ -109,57 +138,64 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                 return Dismissible(
                   key: Key(noteList[index]['title']! + index.toString()),
                   direction: DismissDirection.horizontal,
-
                   confirmDismiss: (direction) async {
                     return await showDeleteDialog();
                   },
-
                   onDismissed: (direction) {
                     deleteNote(index);
-
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Note deleted")),
                     );
                   },
-
                   background: Container(
                     alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.only(left: screenWidth * 0.05),
                     color: Colors.red,
-                    child: const Icon(
+                    child: Icon(
                       Icons.delete,
                       color: Colors.white,
-                      size: 30,
+                      size: screenWidth * 0.08,
                     ),
                   ),
-
                   secondaryBackground: Container(
                     alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: 20),
+                    padding: EdgeInsets.only(right: screenWidth * 0.05),
                     color: Colors.red,
-                    child: const Icon(
+                    child: Icon(
                       Icons.delete,
                       color: Colors.white,
-                      size: 30,
+                      size: screenWidth * 0.08,
                     ),
                   ),
-
                   child: Card(
-                    color: Color.fromARGB(255, 250, 250, 254),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 8,
+                    color: const Color.fromARGB(255, 250, 250, 254),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                      vertical: screenHeight * 0.01,
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                        vertical: screenHeight * 0.005,
+                      ),
                       title: Text(
                         noteList[index]['title'] ?? "",
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.045,
+                        ),
                       ),
-                      subtitle: Text(noteList[index]['date'] ?? ""),
-                      trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                      subtitle: Text(
+                        noteList[index]['date'] ?? "",
+                        style: TextStyle(fontSize: screenWidth * 0.035),
+                      ),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: screenWidth * 0.04,
+                      ),
                       onTap: () {
                         _showNoteDetail(context, noteList[index]);
                       },
@@ -168,7 +204,6 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                 );
               },
             ),
-
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF005AC1),
         onPressed: () async {
@@ -176,33 +211,47 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
             context,
             MaterialPageRoute(builder: (context) => const AddNoteScreen()),
           );
-
           if (result != null) {
             setState(() {
               noteList.add(result);
             });
-
             saveData();
           }
         },
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: Colors.white, size: screenWidth * 0.07),
       ),
     );
   }
 
   void _showNoteDetail(BuildContext context, Map<String, String> note) {
+    final double screenWidth = MediaQuery.of(context).size.width;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFFF8F9FF),
-        title: Text(note['title'] ?? ""),
-        content: Text(note['content'] ?? ""),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: Text(
+          note['title'] ?? "",
+          style: TextStyle(
+            fontSize: screenWidth * 0.05,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: SingleChildScrollView(
+          child: Text(
+            note['content'] ?? "",
+            style: TextStyle(fontSize: screenWidth * 0.04),
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
+            child: Text(
               "Close",
-              style: TextStyle(color: Color(0xFF005AC1)),
+              style: TextStyle(
+                color: const Color(0xFF005AC1),
+                fontSize: screenWidth * 0.04,
+              ),
             ),
           ),
         ],

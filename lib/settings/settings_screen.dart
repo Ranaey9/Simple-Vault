@@ -42,28 +42,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Could not launch GitHub")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Could not launch GitHub")));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F7),
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: Text("Settings", style: TextStyle(fontSize: screenWidth * 0.05)),
         backgroundColor: const Color(0xFFF2F2F7),
         elevation: 0,
         centerTitle: true,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(screenWidth * 0.04),
         children: [
-          // PROFILE
           Container(
-            padding: const EdgeInsets.all(18),
+            padding: EdgeInsets.all(screenWidth * 0.045),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -71,42 +73,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 35,
+                  radius: screenWidth * 0.09,
                   backgroundColor: Colors.grey[200],
                   child: Text(
                     _userName.isNotEmpty ? _userName[0] : "?",
-                    style: const TextStyle(fontSize: 24, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
-                const SizedBox(width: 15),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _userName,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                SizedBox(width: screenWidth * 0.04),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _userName,
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    const Text(
-                      "Digital Vault Member",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
+                      Text(
+                        "Digital Vault Member",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: screenWidth * 0.035,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
 
-          const SizedBox(height: 30),
+          SizedBox(height: screenHeight * 0.035),
 
-          // SYSTEM
-          const Text(
+          Text(
             "SYSTEM",
-            style: TextStyle(color: Colors.grey, fontSize: 12),
+            style: TextStyle(color: Colors.grey, fontSize: screenWidth * 0.03),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: screenHeight * 0.01),
 
           Container(
             decoration: BoxDecoration(
@@ -114,30 +124,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
-              children: const [
+              children: [
                 ListTile(
-                  title: Text("App Version"),
-                  trailing: Text("1.0", style: TextStyle(color: Colors.grey)),
+                  title: Text(
+                    "App Version",
+                    style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
+                  trailing: Text(
+                    "1.0",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: screenWidth * 0.035,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
 
-          const SizedBox(height: 25),
+          SizedBox(height: screenHeight * 0.03),
 
-          // LOGOUT
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
             child: ListTile(
-              title: const Center(
+              title: Center(
                 child: Text(
                   "Log Out",
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w600,
+                    fontSize: screenWidth * 0.04,
                   ),
                 ),
               ),
@@ -145,22 +164,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
 
-          const SizedBox(height: 30),
+          SizedBox(height: screenHeight * 0.04),
 
-          // FOOTER
           Center(
             child: Column(
               children: [
-                const Text(
+                Text(
                   "Designed & Developed by You",
-                  style: TextStyle(color: Colors.grey, fontSize: 13),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: screenWidth * 0.032,
+                  ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: screenHeight * 0.005),
                 GestureDetector(
                   onTap: _launchGitHub,
-                  child: const Text(
+                  child: Text(
                     "github.com/Ranaey9",
-                    style: TextStyle(color: Colors.blue, fontSize: 13),
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: screenWidth * 0.032,
+                    ),
                   ),
                 ),
               ],

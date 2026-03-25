@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'add_password_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart'; //Veriyi kalıcı saklamak için
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class PasswordListScreen extends StatefulWidget {
@@ -12,21 +12,16 @@ class PasswordListScreen extends StatefulWidget {
 
 class _PasswordListScreenState extends State<PasswordListScreen> {
   List<Map<String, String>> passwordList = [];
-
   bool gizliMi = true;
-  //Telefon hafızasına veriyi kaydeder
+
   Future saveData() async {
     final prefs = await SharedPreferences.getInstance();
-
     prefs.setString("passwords", jsonEncode(passwordList));
   }
 
-  //Telefon hafızasındaki veriyi okur ve ekrana yansıtır
   Future loadData() async {
     final prefs = await SharedPreferences.getInstance();
-
     String? data = prefs.getString("passwords");
-
     if (data != null) {
       setState(() {
         passwordList = List<Map<String, String>>.from(
@@ -37,8 +32,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
       });
     }
   }
-  
-  // Sayfa açılır açılmaz hafızadan veriyi okur
+
   @override
   void initState() {
     super.initState();
@@ -47,60 +41,88 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
-      appBar: AppBar(
-        title: const Text("My Passwords"),
-        backgroundColor: const Color(0xFFF8F9FF),
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Text(
+              "My Passwords",
+              style: TextStyle(fontSize: screenWidth * 0.05),
+            ),
+          ),
+          backgroundColor: const Color(0xFFF8F9FF),
+          elevation: 0,
+          centerTitle: true,
+        ),
       ),
       body: passwordList.isEmpty
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Center(
-                child: Text(
-                  "Your saved passwords will appear here.",
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
+          ? Center(
+              child: Text(
+                "Your saved passwords will appear here.",
+                style: TextStyle(
+                  fontSize: screenWidth * 0.045,
+                  color: Colors.grey,
                 ),
               ),
             )
           : ListView.builder(
+              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
               itemCount: passwordList.length,
               itemBuilder: (context, index) {
                 final item = passwordList[index];
 
                 return Card(
-                  color:  Color.fromARGB(255, 250, 250, 254),
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
+                  color: const Color.fromARGB(255, 250, 250, 254),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04,
+                    vertical: screenHeight * 0.01,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: ListTile(
-                    leading: const Icon(
-                      Icons.vpn_key,
-                      color:  Color(0xFF005AC1),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                      vertical: screenHeight * 0.005,
                     ),
-
-                    title: Text(item['site'] ?? ""),
-
+                    leading: CircleAvatar(
+                      backgroundColor: const Color(0xFF005AC1).withOpacity(0.1),
+                      child: Icon(
+                        Icons.vpn_key,
+                        color: const Color(0xFF005AC1),
+                        size: screenWidth * 0.05,
+                      ),
+                    ),
+                    title: Text(
+                      item['site'] ?? "",
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.042,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     subtitle: Text(
                       gizliMi
                           ? "*" * (item['pass']?.length ?? 0)
                           : item['pass'] ?? "",
-                      style: const TextStyle(letterSpacing: 2),
+                      style: TextStyle(
+                        letterSpacing: 2,
+                        fontSize: screenWidth * 0.035,
+                      ),
                     ),
-
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        /// GÖZ İKONU
                         IconButton(
                           icon: Icon(
                             gizliMi ? Icons.visibility_off : Icons.visibility,
-                            color:  Color(0xFF005AC1),
+                            color: const Color(0xFF005AC1),
+                            size: screenWidth * 0.055,
                           ),
                           onPressed: () {
                             setState(() {
@@ -108,12 +130,11 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
                             });
                           },
                         ),
-
-                        /// SİLME BUTONU
                         IconButton(
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.delete,
                             color: Colors.redAccent,
+                            size: screenWidth * 0.055,
                           ),
                           onPressed: () {
                             setState(() {
@@ -129,11 +150,11 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:  Color(0xFF005AC1),
+        backgroundColor: const Color(0xFF005AC1),
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            isScrollControlled: true, //Klavye açılınca ekran bozulmaz
+            isScrollControlled: true,
             backgroundColor: Colors.transparent,
             builder: (context) => AddPasswordScreen(
               onSave: (String site, String pass) {
@@ -145,7 +166,7 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
             ),
           );
         },
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: Colors.white, size: screenWidth * 0.07),
       ),
     );
   }

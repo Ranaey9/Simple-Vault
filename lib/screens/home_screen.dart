@@ -35,15 +35,18 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor:const Color(0xFFF8F9FF),
         elevation: 0,
      actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color:  Color.fromARGB(255, 0, 0, 0),
-              size: 28,
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: IconButton(
+              icon: const Icon(
+                Icons.settings,
+                color:  Color.fromARGB(255, 0, 0, 0),
+                size: 28,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/settings');
-            },
           ),
         ],
       ),

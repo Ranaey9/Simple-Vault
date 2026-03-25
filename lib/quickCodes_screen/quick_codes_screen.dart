@@ -67,34 +67,53 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
-      appBar: AppBar(
-        title: const Text("Quick Codes"),
-        backgroundColor: const Color(0xFFF8F9FF),
-        elevation: 0,
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: Text(
+              "Quick Codes",
+              style: TextStyle(fontSize: screenWidth * 0.05),
+            ),
+          ),
+          backgroundColor: const Color(0xFFF8F9FF),
+          elevation: 0,
+          centerTitle: true,
+        ),
       ),
       body: quickCodes.isEmpty
-          ? const Center(child: Text("Fast code hasn't been added yet."))
+          ? Center(
+              child: Text(
+                "Fast code hasn't been added yet.",
+                style: TextStyle(fontSize: screenWidth * 0.04),
+              ),
+            )
           : GridView.builder(
-              padding: const EdgeInsets.all(15),
+              padding: EdgeInsets.all(screenWidth * 0.04),
               itemCount: quickCodes.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 15,
-                crossAxisSpacing: 15,
+                mainAxisSpacing: screenWidth * 0.04,
+                crossAxisSpacing: screenWidth * 0.04,
                 childAspectRatio: 1.1,
               ),
               itemBuilder: (context, index) {
                 final item = quickCodes[index];
                 return Stack(
+                  clipBehavior: Clip.none,
                   children: [
                     GestureDetector(
                       onTap: () => _copyToClipboard(item["code"]!),
                       child: Card(
-                        color:  Color.fromARGB(255, 250, 250, 254),
+                        color: const Color.fromARGB(255, 250, 250, 254),
                         elevation: 2,
+                        margin: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -104,18 +123,20 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                             children: [
                               Text(
                                 item["label"]!,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 16,
+                                  fontSize: screenWidth * 0.04,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: screenHeight * 0.01),
                               Text(
                                 item["code"]!,
-                                style: const TextStyle(
-                                  fontSize: 18,
+                                style: TextStyle(
+                                  fontSize: screenWidth * 0.045,
                                   color: Colors.blueGrey,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ],
                           ),
@@ -123,20 +144,20 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                       ),
                     ),
                     Positioned(
-                      right: 0,
-                      top: 0,
+                      right: -5,
+                      top: -5,
                       child: GestureDetector(
                         onTap: () => deleteItem(index),
                         child: Container(
-                          padding: const EdgeInsets.all(6),
+                          padding: EdgeInsets.all(screenWidth * 0.015),
                           decoration: const BoxDecoration(
                             color: Colors.red,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.close,
-                            size: 16,
-                            color:Color.fromARGB(255, 255, 255, 255),
+                            size: screenWidth * 0.04,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -146,9 +167,9 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor:  const Color(0xFF005AC1),
+        backgroundColor: const Color(0xFF005AC1),
         onPressed: _openAddSheet,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: Icon(Icons.add, color: Colors.white, size: screenWidth * 0.07),
       ),
     );
   }
