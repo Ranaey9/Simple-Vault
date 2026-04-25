@@ -1,4 +1,4 @@
-package com.example.simple_vault
+package com.ranaey9.simplevault
 
 import io.flutter.embedding.android.FlutterActivity
 
