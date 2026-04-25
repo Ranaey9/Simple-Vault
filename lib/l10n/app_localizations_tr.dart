@@ -18,7 +18,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get welcome => 'Hoşgeldiniz';
 
   @override
-  String get name => 'Name';
+  String get name => 'Ad';
 
   @override
   String get surname => 'Soyad';

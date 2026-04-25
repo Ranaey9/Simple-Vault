@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:simple_vault/Password/password_list_screen.dart';
-import 'package:simple_vault/settings/settings_screen.dart';
-import 'package:simple_vault/notes_screen/secret_notes_screen.dart';
 import 'package:simple_vault/l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,10 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final displayName = name.isEmpty ? l10n.user : name;
-    Text(
-  "${l10n.hello} $displayName!",
-  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
@@ -46,46 +39,49 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             padding: const EdgeInsets.only(right: 20.0, top: 10.0),
-            constraints: const BoxConstraints(),
             icon: const Icon(Icons.settings, color: Colors.black, size: 28),
             onPressed: () => Navigator.pushNamed(context, '/settings'),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40),
-              child: Text(
-                "${l10n.hello} $name!",
-                style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  "${l10n.hello} $displayName!",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 40),
+                _buildVaultCard(
+                  context: context,
+                  title: l10n.passwords,
+                  subtitle: l10n.passwordsDesc,
+                  icon: Icons.vpn_key_rounded,
+                  onTap: () => Navigator.pushNamed(context, '/passwords'),
+                ),
+                _buildVaultCard(
+                  context: context,
+                  title: l10n.secretNotes,
+                  subtitle: l10n.secretNotesDesc,
+                  icon: Icons.notes_rounded,
+                  onTap: () => Navigator.pushNamed(context, '/SecretNotes'),
+                ),
+                _buildVaultCard(
+                  context: context,
+                  title: l10n.quickCodes,
+                  subtitle: l10n.quickCodesDesc,
+                  icon: Icons.qr_code_rounded,
+                  onTap: () => Navigator.pushNamed(context, '/quickCodes'),
+                ),
+              ],
             ),
-            _buildVaultCard(
-              context: context,
-              title: l10n.passwords,
-              subtitle: l10n.passwordsDesc,
-              icon: Icons.vpn_key_rounded,
-              onTap: () => Navigator.pushNamed(context, '/passwords'),
-            ),
-            _buildVaultCard(
-              context: context,
-              title: l10n.secretNotes,
-              subtitle: l10n.secretNotesDesc,
-              icon: Icons.notes_rounded,
-              onTap: () => Navigator.pushNamed(context, '/SecretNotes'),
-            ),
-            _buildVaultCard(
-              context: context,
-              title: l10n.quickCodes,
-              subtitle: l10n.quickCodesDesc,
-              icon: Icons.qr_code_rounded,
-              onTap: () => Navigator.pushNamed(context, '/quickCodes'),
-            ),
-            const Spacer(),
-          ],
+          ),
         ),
       ),
     );
@@ -98,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required VoidCallback onTap,
   }) {
-    final screenHeight = MediaQuery.of(context).size.height;
     const Color iconColor = Color(0xFF005AC1);
 
     return Card(
@@ -109,20 +104,19 @@ class _HomeScreenState extends State<HomeScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: onTap,
-        child: Container(
-          height: screenHeight * 0.15,
+        child: Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
               CircleAvatar(
-                backgroundColor: iconColor.withValues(alpha: 0.1),
+                backgroundColor: iconColor.withOpacity(0.1),
                 radius: 30,
                 child: Icon(icon, color: iconColor, size: 30),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),

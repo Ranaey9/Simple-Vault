@@ -3,7 +3,7 @@
   "appTitle": "Basit Kasa",
   "user": "Kullanıcı",
   "welcome": "Hoşgeldiniz",
-  "user": "Kullanıcı",
+  "name": "Ad",
   "surname": "Soyad",
   "login": "Giriş Yap",
   "fieldsCannotBeEmpty": "Alanlar boş bırakılamaz",
