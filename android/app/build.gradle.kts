@@ -8,6 +8,14 @@ plugins {
 
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
+val hasValidKeystore = keystorePropertiesFile.exists() &&
+    keystorePropertiesFile.readText().let { content ->
+        val storeFilePath = content.lines()
+            .firstOrNull { it.startsWith("storeFile=") }
+            ?.substringAfter("storeFile=")?.trim() ?: ""
+        storeFilePath.isNotEmpty() && !storeFilePath.startsWith("BURAYA") && File(storeFilePath).exists()
+    }
+
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(keystorePropertiesFile.inputStream())
 }
@@ -18,13 +26,13 @@ android {
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+  }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-    }
+    jvmTarget = "17"
+}
 
     defaultConfig {
         applicationId = "com.ranaey9.simplevault"
@@ -35,7 +43,7 @@ android {
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
+        if (hasValidKeystore) {
             create("release") {
                 keyAlias = keystoreProperties["keyAlias"] as String
                 keyPassword = keystoreProperties["keyPassword"] as String
@@ -47,7 +55,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = if (keystorePropertiesFile.exists()) {
+            signingConfig = if (hasValidKeystore) {
                 signingConfigs.getByName("release")
             } else {
                 signingConfigs.getByName("debug")
