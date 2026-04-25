@@ -227,7 +227,7 @@ abstract class AppLocalizations {
   /// No description provided for @designedAndDeveloped.
   ///
   /// In en, this message translates to:
-  /// **'Designed & Developed by You'**
+  /// **'Designed & Developed by Rana'**
   String get designedAndDeveloped;
 
   /// No description provided for @couldNotLaunchGithub.

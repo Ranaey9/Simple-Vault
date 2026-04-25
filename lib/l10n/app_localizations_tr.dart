@@ -73,7 +73,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get designedAndDeveloped =>
-      'Sizin Tarafınızdan Tasarlandı ve Geliştirildi';
+      'Rana tarafından tasarlandı ve geliştirildi';
 
   @override
   String get couldNotLaunchGithub => 'GitHub açılamadı';

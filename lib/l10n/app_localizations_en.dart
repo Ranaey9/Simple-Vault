@@ -72,7 +72,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logOut => 'Log Out';
 
   @override
-  String get designedAndDeveloped => 'Designed & Developed by You';
+  String get designedAndDeveloped => 'Designed & Developed by Rana';
 
   @override
   String get couldNotLaunchGithub => 'Could not launch GitHub';
