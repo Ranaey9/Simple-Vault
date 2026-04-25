@@ -39,48 +39,50 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             padding: const EdgeInsets.only(right: 20.0, top: 10.0),
+            constraints: const BoxConstraints(),
             icon: const Icon(Icons.settings, color: Colors.black, size: 28),
             onPressed: () => Navigator.pushNamed(context, '/settings'),
           ),
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                Text(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Text(
                   "${l10n.hello} $displayName!",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                const SizedBox(height: 40),
-                _buildVaultCard(
-                  context: context,
-                  title: l10n.passwords,
-                  subtitle: l10n.passwordsDesc,
-                  icon: Icons.vpn_key_rounded,
-                  onTap: () => Navigator.pushNamed(context, '/passwords'),
-                ),
-                _buildVaultCard(
-                  context: context,
-                  title: l10n.secretNotes,
-                  subtitle: l10n.secretNotesDesc,
-                  icon: Icons.notes_rounded,
-                  onTap: () => Navigator.pushNamed(context, '/SecretNotes'),
-                ),
-                _buildVaultCard(
-                  context: context,
-                  title: l10n.quickCodes,
-                  subtitle: l10n.quickCodesDesc,
-                  icon: Icons.qr_code_rounded,
-                  onTap: () => Navigator.pushNamed(context, '/quickCodes'),
-                ),
-              ],
-            ),
+              ),
+              _buildVaultCard(
+                context: context,
+                title: l10n.passwords,
+                subtitle: l10n.passwordsDesc,
+                icon: Icons.vpn_key_rounded,
+                onTap: () => Navigator.pushNamed(context, '/passwords'),
+              ),
+              _buildVaultCard(
+                context: context,
+                title: l10n.secretNotes,
+                subtitle: l10n.secretNotesDesc,
+                icon: Icons.notes_rounded,
+                onTap: () => Navigator.pushNamed(context, '/SecretNotes'),
+              ),
+              _buildVaultCard(
+                context: context,
+                title: l10n.quickCodes,
+                subtitle: l10n.quickCodesDesc,
+                icon: Icons.qr_code_rounded,
+                onTap: () => Navigator.pushNamed(context, '/quickCodes'),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
@@ -94,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required VoidCallback onTap,
   }) {
+    final screenHeight = MediaQuery.of(context).size.height;
     const Color iconColor = Color(0xFF005AC1);
 
     return Card(
@@ -104,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: onTap,
-        child: Padding(
+        child: Container(
+          constraints: BoxConstraints(minHeight: screenHeight * 0.15),
           padding: const EdgeInsets.all(20),
           child: Row(
             children: [
@@ -116,10 +120,16 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(width: 20),
               Expanded(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 5),
                     Text(subtitle, style: TextStyle(color: Colors.grey[600])),
                   ],
