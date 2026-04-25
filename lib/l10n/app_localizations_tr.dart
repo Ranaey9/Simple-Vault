@@ -219,5 +219,5 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get contactDesc =>
-      'Sorularınız varsa, GitHub sayfamız üzerinden bize ulaşabilirsiniz: github.com/Ranaey9';
+      'Sorularınız varsa, E-mail sayfamız üzerinden bize ulaşabilirsiniz: eyrana002@gmail.com';
 }

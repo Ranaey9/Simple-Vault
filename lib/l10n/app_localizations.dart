@@ -503,7 +503,7 @@ abstract class AppLocalizations {
   /// No description provided for @contactDesc.
   ///
   /// In en, this message translates to:
-  /// **'If you have questions about this privacy policy, you can reach us via our GitHub page: github.com/Ranaey9'**
+  /// **'If you have questions about this privacy policy, you can reach us via our E-mail page: eyrana002@gmail.com'**
   String get contactDesc;
 }
 
