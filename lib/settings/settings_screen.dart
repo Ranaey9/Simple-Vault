@@ -40,14 +40,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _launchGitHub() async {
-    const url = "https://github.com/Ranaey9";
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-    } else {
+    final Uri url = Uri.parse("https://github.com/Ranaey9");
+    try {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.couldNotLaunchGithub)));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.couldNotLaunchGithub),
+        ),
+      );
     }
   }
 
@@ -59,7 +61,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F7),
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: screenWidth * 0.05)),
+        title: Text(
+          AppLocalizations.of(context)!.settings,
+          style: TextStyle(fontSize: screenWidth * 0.05),
+        ),
         backgroundColor: const Color(0xFFF2F2F7),
         elevation: 0,
         centerTitle: true,
@@ -79,7 +84,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   radius: screenWidth * 0.09,
                   backgroundColor: Colors.grey[200],
                   child: Text(
-                    _userName.isNotEmpty ? _userName[0] : AppLocalizations.of(context)!.user[0],
+                    _userName.isNotEmpty
+                        ? _userName[0]
+                        : AppLocalizations.of(context)!.user[0],
                     style: TextStyle(
                       fontSize: screenWidth * 0.06,
                       color: Colors.grey,
@@ -92,7 +99,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _userName.isNotEmpty ? _userName : AppLocalizations.of(context)!.user,
+                        _userName.isNotEmpty
+                            ? _userName
+                            : AppLocalizations.of(context)!.user,
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
@@ -137,8 +146,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        Localizations.localeOf(context).languageCode == 'tr' ? 'Türkçe' : 'English',
-                        style: TextStyle(color: Colors.grey, fontSize: screenWidth * 0.035),
+                        Localizations.localeOf(context).languageCode == 'tr'
+                            ? 'Türkçe'
+                            : 'English',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: screenWidth * 0.035,
+                        ),
                       ),
                       Icon(
                         Icons.arrow_forward_ios,
