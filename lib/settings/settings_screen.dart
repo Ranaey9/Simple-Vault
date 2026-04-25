@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:simple_vault/l10n/app_localizations.dart';
+import 'package:simple_vault/settings/language_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -23,10 +25,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     String name = prefs.getString('userName') ?? "";
     String surname = prefs.getString('userSurname') ?? "";
 
+    if (!mounted) return;
     setState(() {
-      _userName = (name + " " + surname).trim().isEmpty
-          ? "User"
-          : "$name $surname";
+      _userName = ('$name $surname').trim().isEmpty ? '' : '$name $surname';
     });
   }
 
@@ -34,6 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', false);
 
+    if (!context.mounted) return;
     Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
   }
 
@@ -42,9 +44,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
+      if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Could not launch GitHub")));
+      ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.couldNotLaunchGithub)));
     }
   }
 
@@ -56,7 +59,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F7),
       appBar: AppBar(
-        title: Text("Settings", style: TextStyle(fontSize: screenWidth * 0.05)),
+        title: Text(AppLocalizations.of(context)!.settings, style: TextStyle(fontSize: screenWidth * 0.05)),
         backgroundColor: const Color(0xFFF2F2F7),
         elevation: 0,
         centerTitle: true,
@@ -76,7 +79,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   radius: screenWidth * 0.09,
                   backgroundColor: Colors.grey[200],
                   child: Text(
-                    _userName.isNotEmpty ? _userName[0] : "?",
+                    _userName.isNotEmpty ? _userName[0] : AppLocalizations.of(context)!.user[0],
                     style: TextStyle(
                       fontSize: screenWidth * 0.06,
                       color: Colors.grey,
@@ -89,7 +92,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        _userName,
+                        _userName.isNotEmpty ? _userName : AppLocalizations.of(context)!.user,
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
@@ -97,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        "Digital Vault Member",
+                        AppLocalizations.of(context)!.digitalVaultMember,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: screenWidth * 0.035,
@@ -113,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SizedBox(height: screenHeight * 0.035),
 
           Text(
-            "SYSTEM",
+            AppLocalizations.of(context)!.system,
             style: TextStyle(color: Colors.grey, fontSize: screenWidth * 0.03),
           ),
           SizedBox(height: screenHeight * 0.01),
@@ -127,7 +130,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 ListTile(
                   title: Text(
-                    "App Version",
+                    AppLocalizations.of(context)!.language,
+                    style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        Localizations.localeOf(context).languageCode == 'tr' ? 'Türkçe' : 'English',
+                        style: TextStyle(color: Colors.grey, fontSize: screenWidth * 0.035),
+                      ),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: screenWidth * 0.04,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/language');
+                  },
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!.appVersion,
                     style: TextStyle(fontSize: screenWidth * 0.04),
                   ),
                   trailing: Text(
@@ -137,6 +164,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       fontSize: screenWidth * 0.035,
                     ),
                   ),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!.privacyPolicy,
+                    style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
+                  trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    size: screenWidth * 0.04,
+                    color: Colors.grey,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/privacyPolicy');
+                  },
                 ),
               ],
             ),
@@ -152,7 +194,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: ListTile(
               title: Center(
                 child: Text(
-                  "Log Out",
+                  AppLocalizations.of(context)!.logOut,
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w600,
@@ -170,7 +212,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             child: Column(
               children: [
                 Text(
-                  "Designed & Developed by You",
+                  AppLocalizations.of(context)!.designedAndDeveloped,
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: screenWidth * 0.032,

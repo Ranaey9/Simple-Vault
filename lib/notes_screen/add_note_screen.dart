@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_vault/l10n/app_localizations.dart';
 
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
@@ -13,26 +14,24 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
   void _saveNote() {
     if (titleController.text.isNotEmpty) {
-      String formattedDate =
-          "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year} "
-          "${DateTime.now().hour}:${DateTime.now().minute}";
-
+      final now = DateTime.now();
       Navigator.pop(context, {
         'title': titleController.text,
         'content': contentController.text,
-        'date': formattedDate,
+        'date': "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}",
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor:const Color(0xFFF8F9FF),
+    final l10n = AppLocalizations.of(context)!;
 
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8F9FF),
       appBar: AppBar(
         backgroundColor: const Color(0xFFF8F9FF),
-        title: const Text("New Note"),
+        title: Text(l10n.newNote),
         actions: [
           IconButton(
             icon: const Icon(Icons.check, color: Color(0xFF005AC1), size: 30),
@@ -40,7 +39,6 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           ),
         ],
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -48,20 +46,18 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             TextField(
               controller: titleController,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              decoration: const InputDecoration(
-                hintText: "Title",
+              decoration: InputDecoration(
+                hintText: l10n.title,
                 border: InputBorder.none,
               ),
             ),
-
             const Divider(),
-
             Expanded(
               child: TextField(
                 controller: contentController,
                 maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: "Start writing...",
+                decoration: InputDecoration(
+                  hintText: l10n.startWriting,
                   border: InputBorder.none,
                 ),
               ),

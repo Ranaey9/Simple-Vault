@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:simple_vault/l10n/app_localizations.dart';
 import 'package:simple_vault/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
+    final l10n = AppLocalizations.of(context)!;
     
     final Color primaryColor = const Color(0xFF005AC1);
     final Color surfaceColor = const Color(0xFFF8F9FF);
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: screenHeight * 0.03),
 
                 Text(
-                  "Welcome",
+                  l10n.welcome,
                   style: TextStyle(
                     fontSize: screenWidth * 0.06,
                     fontWeight: FontWeight.normal,
@@ -59,8 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: isimController,
                   decoration: InputDecoration(
-                    labelText: "Name",
-                    hintText: "Name",
+                    labelText: l10n.name,
+                    hintText: l10n.name,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     prefixIcon: Icon(
                       Icons.person_outline,
@@ -89,8 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: soyisimController,
                   decoration: InputDecoration(
-                    labelText: "Surname",
-                    hintText: "Surname",
+                    labelText: l10n.surname,
+                    hintText: l10n.surname,
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     prefixIcon: Icon(
                       Icons.badge_outlined,
@@ -129,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: Text(
-                      "Log in", 
+                      l10n.login, 
                       style: TextStyle(fontSize: screenWidth * 0.04)
                     ),
                   ),
@@ -147,9 +149,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final String surname = soyisimController.text.trim();
 
     if (name.isEmpty || surname.isEmpty) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("Fields cannot be empty"),
+          content: Text(AppLocalizations.of(context)!.fieldsCannotBeEmpty),
           behavior: SnackBarBehavior.floating,
           elevation: 0,
           backgroundColor: const Color(0xFFBA1A1A),
