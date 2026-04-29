@@ -34,20 +34,32 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFFF8F9FF),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(l10n.deleteNote, style: TextStyle(fontWeight: FontWeight.bold, fontSize: sw * 0.05)),
-        content: Text(l10n.deleteNoteConfirm, style: TextStyle(fontSize: sw * 0.04)),
+        title: Text(
+          l10n.deleteNote,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: sw * 0.05),
+        ),
+        content: Text(
+          l10n.deleteNoteConfirm,
+          style: TextStyle(fontSize: sw * 0.04),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.no, style: TextStyle(color: Colors.grey, fontSize: sw * 0.04)),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Text(
+              l10n.no,
+              style: TextStyle(color: Colors.grey, fontSize: sw * 0.04),
             ),
-            child: Text(l10n.yes, style: TextStyle(fontSize: sw * 0.04)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(
+              l10n.yes,
+              style: TextStyle(
+                fontSize: sw * 0.04,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -73,7 +85,10 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
         child: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(top: 30.0),
-            child: Text(l10n.secretNotes, style: TextStyle(fontSize: sw * 0.05)),
+            child: Text(
+              l10n.secretNotes,
+              style: TextStyle(fontSize: sw * 0.05),
+            ),
           ),
           backgroundColor: const Color(0xFFF8F9FF),
           elevation: 0,
@@ -96,33 +111,55 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
                   confirmDismiss: (d) async => await showDeleteDialog(),
                   onDismissed: (d) {
                     deleteNote(index);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(l10n.noteDeleted)),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(l10n.noteDeleted)));
                   },
                   background: Container(
                     alignment: Alignment.centerLeft,
                     padding: EdgeInsets.only(left: sw * 0.05),
                     color: Colors.red,
-                    child: Icon(Icons.delete, color: Colors.white, size: sw * 0.08),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: sw * 0.08,
+                    ),
                   ),
                   secondaryBackground: Container(
                     alignment: Alignment.centerRight,
                     padding: EdgeInsets.only(right: sw * 0.05),
                     color: Colors.red,
-                    child: Icon(Icons.delete, color: Colors.white, size: sw * 0.08),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                      size: sw * 0.08,
+                    ),
                   ),
                   child: Card(
                     color: const Color.fromARGB(255, 250, 250, 254),
-                    margin: EdgeInsets.symmetric(horizontal: sw * 0.04, vertical: sh * 0.01),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: sw * 0.04,
+                      vertical: sh * 0.01,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: sw * 0.04, vertical: sh * 0.005),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: sw * 0.04,
+                        vertical: sh * 0.005,
+                      ),
                       title: Text(
                         noteList[index]['title'] ?? "",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: sw * 0.045),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: sw * 0.045,
+                        ),
                       ),
-                      subtitle: Text(noteList[index]['date'] ?? "", style: TextStyle(fontSize: sw * 0.035)),
+                      subtitle: Text(
+                        noteList[index]['date'] ?? "",
+                        style: TextStyle(fontSize: sw * 0.035),
+                      ),
                       trailing: Icon(Icons.arrow_forward_ios, size: sw * 0.04),
                       onTap: () => _showNoteDetail(context, noteList[index]),
                     ),
@@ -155,12 +192,26 @@ class _SecretNotesScreenState extends State<SecretNotesScreen> {
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFFF8F9FF),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        title: Text(note['title'] ?? "", style: TextStyle(fontSize: sw * 0.05, fontWeight: FontWeight.bold)),
-        content: SingleChildScrollView(child: Text(note['content'] ?? "", style: TextStyle(fontSize: sw * 0.04))),
+        title: Text(
+          note['title'] ?? "",
+          style: TextStyle(fontSize: sw * 0.05, fontWeight: FontWeight.bold),
+        ),
+        content: SingleChildScrollView(
+          child: Text(
+            note['content'] ?? "",
+            style: TextStyle(fontSize: sw * 0.04),
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(l10n.close, style: TextStyle(color: const Color(0xFF005AC1), fontSize: sw * 0.04)),
+            child: Text(
+              l10n.close,
+              style: TextStyle(
+                color: const Color(0xFF005AC1),
+                fontSize: sw * 0.04,
+              ),
+            ),
           ),
         ],
       ),

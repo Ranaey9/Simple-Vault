@@ -14,7 +14,8 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
   List<Map<String, String>> passwordList = [];
   final Set<int> _visibleIndices = {};
 
-  Future<void> saveData() async => SecureStorageService.savePasswords(passwordList);
+  Future<void> saveData() async =>
+      SecureStorageService.savePasswords(passwordList);
 
   Future<void> loadData() async {
     final data = await SecureStorageService.loadPasswords();
@@ -40,7 +41,10 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
         child: AppBar(
           title: Padding(
             padding: const EdgeInsets.only(top: 30.0),
-            child: Text(l10n.myPasswords, style: TextStyle(fontSize: sw * 0.05)),
+            child: Text(
+              l10n.myPasswords,
+              style: TextStyle(fontSize: sw * 0.05),
+            ),
           ),
           backgroundColor: const Color(0xFFF8F9FF),
           elevation: 0,
@@ -60,50 +64,130 @@ class _PasswordListScreenState extends State<PasswordListScreen> {
               itemBuilder: (context, index) {
                 final item = passwordList[index];
                 final bool isVisible = _visibleIndices.contains(index);
-                return Card(
-                  color: const Color.fromARGB(255, 250, 250, 254),
-                  margin: EdgeInsets.symmetric(horizontal: sw * 0.04, vertical: sh * 0.01),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: sw * 0.04, vertical: sh * 0.005),
-                    leading: CircleAvatar(
-                      backgroundColor: const Color(0xFF005AC1).withValues(alpha: 0.1),
-                      child: Icon(Icons.vpn_key, color: const Color(0xFF005AC1), size: sw * 0.05),
-                    ),
-                    title: Text(
-                      item['site'] ?? "",
-                      style: TextStyle(fontSize: sw * 0.042, fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Text(
-                      isVisible ? item['pass'] ?? "" : "*" * (item['pass']?.length ?? 0),
-                      style: TextStyle(letterSpacing: 2, fontSize: sw * 0.035),
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            isVisible ? Icons.visibility : Icons.visibility_off,
-                            color: const Color(0xFF005AC1),
-                            size: sw * 0.055,
+
+                return Dismissible(
+                  key: Key(item['site']! + index.toString()),
+                  direction: DismissDirection.horizontal,
+                  confirmDismiss: (direction) async {
+                    return await showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: const Color(0xFFF8F9FF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        title: Text(
+                          l10n.deleteNote,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: sw * 0.05,
                           ),
-                          onPressed: () {
-                            setState(() {
-                              isVisible ? _visibleIndices.remove(index) : _visibleIndices.add(index);
-                            });
-                          },
                         ),
-                        IconButton(
-                          icon: Icon(Icons.delete, color: Colors.redAccent, size: sw * 0.055),
-                          onPressed: () {
-                            setState(() {
-                              _visibleIndices.remove(index);
-                              passwordList.removeAt(index);
-                              saveData();
-                            });
-                          },
+                        content: Text(
+                          l10n.deleteNoteConfirm,
+                          style: TextStyle(fontSize: sw * 0.04),
                         ),
-                      ],
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, false),
+                            child: Text(
+                              l10n.no,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: sw * 0.04,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, true),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
+                            ),
+                            child: Text(
+                              l10n.yes,
+                              style: TextStyle(
+                                fontSize: sw * 0.04,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  onDismissed: (direction) {
+                    setState(() {
+                      _visibleIndices.remove(index);
+                      passwordList.removeAt(index);
+                      saveData();
+                    });
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: sw * 0.05),
+                    child: const Icon(Icons.delete, color: Colors.white),
+                  ),
+                  secondaryBackground: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: sw * 0.05),
+                    child: const Icon(Icons.delete, color: Colors.white),
+                  ),
+                  child: Card(
+                    color: const Color.fromARGB(255, 250, 250, 254),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: sw * 0.04,
+                      vertical: sh * 0.01,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: sw * 0.04,
+                        vertical: sh * 0.005,
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor: const Color(
+                          0xFF005AC1,
+                        ).withValues(alpha: 0.1),
+                        child: Icon(
+                          Icons.vpn_key,
+                          color: const Color(0xFF005AC1),
+                          size: sw * 0.05,
+                        ),
+                      ),
+                      title: Text(
+                        item['site'] ?? "",
+                        style: TextStyle(
+                          fontSize: sw * 0.042,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      subtitle: Text(
+                        isVisible
+                            ? item['pass'] ?? ""
+                            : "*" * (item['pass']?.length ?? 0),
+                        style: TextStyle(
+                          letterSpacing: 2,
+                          fontSize: sw * 0.035,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          isVisible ? Icons.visibility : Icons.visibility_off,
+                          color: const Color(0xFF005AC1),
+                          size: sw * 0.055,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isVisible
+                                ? _visibleIndices.remove(index)
+                                : _visibleIndices.add(index);
+                          });
+                        },
+                      ),
                     ),
                   ),
                 );

@@ -24,12 +24,13 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
     Clipboard.setData(ClipboardData(text: text));
     // Kopyalama bildirimini göster
     final l10n = AppLocalizations.of(context)!;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("$text ${l10n.copied}")),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("$text ${l10n.copied}")));
   }
 
-  Future<void> saveData() async => SecureStorageService.saveQuickCodes(quickCodes);
+  Future<void> saveData() async =>
+      SecureStorageService.saveQuickCodes(quickCodes);
 
   Future<void> loadData() async {
     final data = await SecureStorageService.loadQuickCodes();
@@ -38,9 +39,51 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
   }
 
   void deleteItem(int index) async {
-    quickCodes.removeAt(index);
-    await saveData();
-    setState(() {});
+    final l10n = AppLocalizations.of(context)!;
+    final double sw = MediaQuery.of(context).size.width;
+
+    bool? confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFFF8F9FF),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          l10n.deleteNote,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: sw * 0.05),
+        ),
+        content: Text(
+          l10n.deleteNoteConfirm,
+          style: TextStyle(fontSize: sw * 0.04),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(
+              l10n.no,
+              style: TextStyle(color: Colors.grey, fontSize: sw * 0.04),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(
+              l10n.yes,
+              style: TextStyle(
+                fontSize: sw * 0.04,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      setState(() {
+        quickCodes.removeAt(index);
+        saveData();
+      });
+    }
   }
 
   void _openAddSheet() {
@@ -105,20 +148,28 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                         color: const Color.fromARGB(255, 250, 250, 254),
                         elevation: 2,
                         margin: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         child: Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 item["label"]!,
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: sw * 0.04),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: sw * 0.04,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(height: sh * 0.01),
                               Text(
                                 item["code"]!,
-                                style: TextStyle(fontSize: sw * 0.045, color: Colors.blueGrey),
+                                style: TextStyle(
+                                  fontSize: sw * 0.045,
+                                  color: Colors.blueGrey,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -133,8 +184,15 @@ class _QuickCodesScreenState extends State<QuickCodesScreen> {
                         onTap: () => deleteItem(index),
                         child: Container(
                           padding: EdgeInsets.all(sw * 0.015),
-                          decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                          child: Icon(Icons.close, size: sw * 0.04, color: Colors.white),
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            size: sw * 0.04,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
