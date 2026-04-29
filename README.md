@@ -1,23 +1,23 @@
 #  Simple Vault
 
-A minimalist, secure digital vault application built with Flutter. **Simple Vault** allows users to store passwords, secret notes, and quick access codes with a clean and intuitive user interface.
+Simple Vault is a robust and privacy-focused Flutter application designed to keep your sensitive information safe. Whether it's your login credentials, private thoughts, or essential quick codes, Simple Vault stores everything securely on your device, ensuring your data remains in your hands alone.
 
 ---
 
 ##  Features
 
-*   **User Session Management:** Persistent login state using `shared_preferences`.
-*   **Secure Password Storage:** Categorized list for managing credentials.
-*   **Secret Notes:** A dedicated space for private information and daily logs.
-*   **Quick Codes:** Fast access for door pins, Wi-Fi passwords, and short-term data.
-*   **Dynamic UI:** Personalized greeting and profile management based on user input.
+-  **Secure Storage**: Advanced encryption to store your passwords and sensitive information safely.
+-  **Secret Notes**: A dedicated space for your private thoughts, ideas, or sensitive notes.
+- **Quick Codes**: Store and quickly access important PINs, access codes, or short texts.
+-  **Multi-Language Support**: Fully localized in multiple languages using Flutter's robust `l10n` localization system.
+-  **Privacy First**: No cloud syncing without your permission. All your data lives securely on your local device via `flutter_secure_storage`.
+-  **Modern UI/UX**: Clean, intuitive, and responsive design ensuring an excellent user experience.
 
-## Tech Stack
-
-*   **Frontend:** [Flutter](https://flutter.dev) (Dart)
-*   **State & Storage:** `shared_preferences` for local key-value persistence.
-*   **Utilities:** `url_launcher` for external link integration.
-*   **Architecture:** Modular screen structure for high maintainability.
+##  Built With
+* [Flutter](https://flutter.dev/) - The UI toolkit for building natively compiled applications.
+* [Dart](https://dart.dev/) - The programming language used by Flutter.
+* [Flutter Secure Storage](https://pub.dev/packages/flutter_secure_storage) - For encrypting and storing data locally.
+* [Shared Preferences](https://pub.dev/packages/shared_preferences) - For saving user settings securely.
 
 ---
 
