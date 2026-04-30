@@ -21,7 +21,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.ranaey9.simplevault"
+    namespace = "com.ranaayoub.simplevault"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -35,7 +35,7 @@ android {
 }
 
     defaultConfig {
-        applicationId = "com.ranaey9.simplevault"
+        applicationId = "com.ranaayoub.simplevault"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
